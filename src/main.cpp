@@ -1,14 +1,25 @@
 #include <iostream>
 #include<windows.h>
 #include "hand.hpp"
+#include "shoe.hpp"
+
+/*
+TODOS:
+- Player
+- Dealer
+
+- Game
+
+- GameDisplay
+*/
 
 int main() {
     SetConsoleOutputCP(65001);
 
-    Card card1(Rank::Seven, Suit::Spades);
-    Card card2(Rank::Ace, Suit::Hearts);
+    Shoe shoe(6);
 
-    Hand hand(10, card1, card2);
+    Hand hand(10, shoe.getCard(), shoe.getCard());
+    hand.addCard(shoe.getCard());
     
     std::cout<<hand.toString();
     std::cout<<hand.getValue();

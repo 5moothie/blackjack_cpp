@@ -1,3 +1,5 @@
+#pragma once
+
 #include "rank.hpp"
 #include "suit.hpp"
 #include <string>
