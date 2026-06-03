@@ -1,6 +1,12 @@
 #include <iostream>
+#include<windows.h>
+#include "card.hpp"
 
 int main() {
-    std::cout << "Blackjack engine starting...\n";
+    SetConsoleOutputCP(65001);
+
+    Card card(Rank::Seven, Suit::Spades);
+    std::cout<<card.toString();
+  
     return 0;
 }

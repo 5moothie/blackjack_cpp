@@ -6,10 +6,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
 add_executable(blackjack
+  include/card.hpp
+  include/suit.hpp
+  include/rank.hpp
+  include/hand.hpp
   src/main.cpp
+  src/card.cpp
+  src/hand.cpp
 )
+
+target_include_directories(blackjack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 
 # find_package(raylib CONFIG REQUIRED)
 # target_link_libraries(blackjack PRIVATE raylib)
