@@ -1,7 +1,7 @@
 #include "card.hpp"
 #include<cassert>
 
-int Card::getValue() noexcept {
+int Card::getValue() const noexcept {
   switch(rank) {
     case Rank::Two: return 2;
     case Rank::Three: return 3; 
@@ -21,7 +21,7 @@ int Card::getValue() noexcept {
   __builtin_unreachable();
 }
 
-std::string Card::rankToString() noexcept {
+std::string Card::rankToString() const noexcept {
   switch(rank) {
     case Rank::Two: return "2";
     case Rank::Three: return "3"; 
@@ -42,7 +42,7 @@ std::string Card::rankToString() noexcept {
 }
 
 
-std::string Card::suitToString() noexcept {
+std::string Card::suitToString() const noexcept {
   switch (suit) {
     case Suit::Spades: return "♠";
     case Suit::Hearts: return "♥";
