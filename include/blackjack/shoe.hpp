@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "card.hpp"
+#include "card/card.hpp"
 
 /*
 Shoe needs to be reshuffled so it's impossible for it to get empty on hand

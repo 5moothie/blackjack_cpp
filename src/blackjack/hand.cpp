@@ -1,4 +1,4 @@
-#include "hand.hpp"
+#include "blackjack/hand.hpp"
 
 int Hand::getValue() const noexcept {
   int acesCount = 0;

@@ -1,4 +1,4 @@
-#include "card.hpp"
+#include "card/card.hpp"
 #include<cassert>
 
 int Card::getValue() const noexcept {

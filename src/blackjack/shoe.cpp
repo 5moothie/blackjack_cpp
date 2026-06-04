@@ -1,8 +1,8 @@
 #include <random>
 #include <algorithm>
 
-#include "shoe.hpp"
-#include "deck.hpp"
+#include "blackjack/shoe.hpp"
+#include "card/deck.hpp"
 #include <stdexcept>
 
 Shoe::Shoe(size_t numberOfDecks): 

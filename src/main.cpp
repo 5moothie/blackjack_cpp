@@ -1,7 +1,7 @@
 #include <iostream>
 #include<windows.h>
-#include "hand.hpp"
-#include "shoe.hpp"
+#include "blackjack/hand.hpp"
+#include "blackjack/shoe.hpp"
 
 /*
 TODOS:

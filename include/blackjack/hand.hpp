@@ -4,7 +4,7 @@
 #include <utility>
 #include <string>
 
-#include "card.hpp"
+#include "card/card.hpp"
 
 /*
 Hand is a one round class - after a round it should be destroyed and a new hand must be created for the next one

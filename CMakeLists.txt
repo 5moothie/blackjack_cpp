@@ -7,17 +7,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(blackjack
-  include/card.hpp
-  include/suit.hpp
-  include/rank.hpp
-  include/hand.hpp
-  include/deck.hpp
-  include/shoe.hpp
+  include/card/card.hpp
+  include/card/suit.hpp
+  include/card/rank.hpp
+  include/blackjack/hand.hpp
+  include/card/deck.hpp
+  include/blackjack/shoe.hpp
   src/main.cpp
-  src/card.cpp
-  src/hand.cpp
-  src/deck.cpp
-  src/shoe.cpp
+  src/card/card.cpp
+  src/blackjack/hand.cpp
+  src/card/deck.cpp
+  src/blackjack/shoe.cpp
 )
 
 target_include_directories(blackjack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

@@ -1,5 +1,5 @@
-#include "deck.hpp"
-#include "card.hpp"
+#include "card/deck.hpp"
+#include "card/card.hpp"
 
 Deck::Deck() {
   for(Rank rank : ALL_RANKS)
