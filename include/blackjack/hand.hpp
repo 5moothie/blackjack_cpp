@@ -28,6 +28,7 @@ public:
   [[nodiscard]] int getValue() const noexcept;
   [[nodiscard]] bool isBust() const noexcept {return getValue() > 21;}
   [[nodiscard]] bool isBlackjack() const noexcept {return getValue() == 21 && getSize() == 2;}
+  [[nodiscard]] bool isSoft() const noexcept;
 
   void addCard(Card card) noexcept {cards.push_back(std::move(card));}
   void clear() noexcept {cards.clear();}

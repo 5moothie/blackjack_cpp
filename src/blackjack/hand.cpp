@@ -24,3 +24,23 @@ std::string Hand::toString() const noexcept {
     res+=card.toString()+" ";
   return res;
 }
+
+bool Hand::isSoft() const noexcept {
+  int acesCount = 0;
+  int value = 0;
+  for(const auto& card : cards) {
+    if(card.getRank() == Rank::Ace)
+      acesCount++;
+    
+    value += card.getValue();
+  }
+
+  // if there are aces and it busts, decrease the value of aces to 1
+  while(value > 21 && acesCount > 0) {    
+    value-=10;
+    --acesCount;
+  }
+  
+  // soft if at least one ace counted as 11
+  return acesCount > 0;
+}
