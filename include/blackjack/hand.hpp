@@ -14,7 +14,15 @@ class Hand {
 private:
   std::vector<Card> cards{};
   int bet;
+  bool hasBeenSplit{false};
 
+
+  struct HandScore{
+    int value;
+    int acesCount;
+  };
+  HandScore calculateScore() const noexcept;
+  
 public:
   Hand(int bet): bet(bet) {}
   Hand(int bet, Card card): bet(bet), cards{std::move(card)} {}
@@ -27,11 +35,14 @@ public:
 
   [[nodiscard]] int getValue() const noexcept;
   [[nodiscard]] bool isBust() const noexcept {return getValue() > 21;}
-  [[nodiscard]] bool isBlackjack() const noexcept {return getValue() == 21 && getSize() == 2;}
+  [[nodiscard]] bool isBlackjack() const noexcept {return getValue() == 21 && getSize() == 2 && !hasBeenSplit;}
   [[nodiscard]] bool isSoft() const noexcept;
 
-  void addCard(Card card) noexcept {cards.push_back(std::move(card));}
-  void clear() noexcept {cards.clear();}
+  bool canDouble() const noexcept;
+  bool canSplit() const noexcept;
 
-  void doubleBet() noexcept { bet*=2; }
+  void hit(Card card) noexcept;
+  void double_(Card card);
+  Hand split(); // removes one of the cards and returns it
+  void clear() noexcept {cards.clear();}
 };
