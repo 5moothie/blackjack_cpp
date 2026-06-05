@@ -9,12 +9,8 @@
 
 /*
 TODOS:
-- Player
-- Dealer
-
-- Game
-
-- GameDisplay
+- Raylib frontend
+- tests for backend components
 */
 
 int main() {
