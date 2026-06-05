@@ -5,8 +5,8 @@
 #include "card/deck.hpp"
 #include <stdexcept>
 
-Shoe::Shoe(size_t numberOfDecks): 
-            numberOfDecks(numberOfDecks) {
+Shoe::Shoe(size_t numberOfDecks, float cutCard): 
+            numberOfDecks(numberOfDecks), cutCard(cutCard) {
   fill(); 
   shuffle();
 }
@@ -44,3 +44,7 @@ void Shoe::reshuffle() noexcept {
   shuffle();
 }
 
+bool Shoe::needsReshuffle() const noexcept {
+  int reshuffleBelow = (int)(numberOfDecks * cutCard);
+  return cards.size() <= reshuffleBelow;
+}

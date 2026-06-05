@@ -1,3 +1,5 @@
+#pragma once
+
 #include "blackjack/hand.hpp"
 #include "blackjack/shoe.hpp"
 
@@ -22,4 +24,5 @@ public:
 
   void playOutHand(Shoe& shoe);
   void newHand(Shoe& shoe) { hand.emplace(0, shoe.getCard(), shoe.getCard()); }
+  void clearHand() noexcept {hand.reset();}
 };

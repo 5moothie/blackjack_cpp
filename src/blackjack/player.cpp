@@ -8,7 +8,7 @@ Hand& Player::getActiveHand() {
   return hands[activeHand];  
 }
 
-const Hand& Player::getActiveHand() const {
+const Hand& Player::getActiveHandConst() const {
   if(activeHand >= hands.size())
     throw std::runtime_error("No more active hands");
 
@@ -16,11 +16,11 @@ const Hand& Player::getActiveHand() const {
 }
 
 bool Player::canDoubleActiveHand() const {
-  return getActiveHand().canDouble() && getActiveHand().getBet() <= balance;
+  return getActiveHandConst().canDouble() && getActiveHandConst().getBet() <= balance;
 }
 
 bool Player::canSplitActiveHand() const {
-  return getActiveHand().canSplit() && getActiveHand().getBet() <= balance;
+  return getActiveHandConst().canSplit() && getActiveHandConst().getBet() <= balance;
 }
 
 void Player::hitActiveHand(Shoe& shoe) {

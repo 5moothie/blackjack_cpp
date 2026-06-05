@@ -15,6 +15,10 @@ add_executable(blackjack
   include/blackjack/shoe.hpp
   include/blackjack/dealer.hpp
   include/blackjack/player.hpp
+  include/blackjack/game.hpp
+  include/IO/actions.hpp
+  include/IO/gameDisplay.hpp
+  include/IO/inputTaker.hpp
 
   src/main.cpp
   src/card/card.cpp
@@ -23,6 +27,7 @@ add_executable(blackjack
   src/blackjack/shoe.cpp
   src/blackjack/dealer.cpp
   src/blackjack/player.cpp
+  src/blackjack/game.cpp
 )
 
 target_include_directories(blackjack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

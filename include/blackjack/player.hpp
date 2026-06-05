@@ -1,7 +1,9 @@
+#pragma once
+
 #include "blackjack/hand.hpp"
 #include "blackjack/shoe.hpp"
 
-#include<vector>
+#include <vector>
 
 
 /*
@@ -18,7 +20,7 @@ private:
 public:
   Player(int balance): balance(balance), activeHand(0), hands{} {}
 
-  [[nodiscard]] const Hand& getActiveHand() const;
+  [[nodiscard]] const Hand& getActiveHandConst() const;
   void activateNextHand() noexcept {activeHand++;}
   [[nodiscard]] bool hasActiveHand() const noexcept { return handsLeftToPlay() > 0; };
   [[nodiscard]] const std::vector<Hand>& getAllHands() const noexcept { return hands; };
