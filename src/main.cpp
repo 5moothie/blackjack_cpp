@@ -1,7 +1,11 @@
 #include <iostream>
 #include<windows.h>
-#include "blackjack/hand.hpp"
-#include "blackjack/shoe.hpp"
+#include <memory>
+#include "blackjack/game.hpp"
+#include "IO/inputTaker.hpp"
+#include "IO/gameDisplay.hpp"
+#include "IO/consoleInputTaker.hpp"
+#include "IO/consoleDisplay.hpp"
 
 /*
 TODOS:
@@ -14,15 +18,12 @@ TODOS:
 */
 
 int main() {
-    SetConsoleOutputCP(65001);
+  SetConsoleOutputCP(65001);
 
-    Shoe shoe(6);
+  std::unique_ptr<GameDisplay> gameDisplay = std::make_unique<ConsoleDisplay>();
+  std::unique_ptr<InputTaker> inputTaker = std::make_unique<ConsoleInputTaker>();
 
-    Hand hand(10, shoe.getCard(), shoe.getCard());
-    hand.addCard(shoe.getCard());
-    
-    std::cout<<hand.toString();
-    std::cout<<hand.getValue();
+  Game game(std::move(gameDisplay), std::move(inputTaker));
   
-    return 0;
+  game.run();
 }

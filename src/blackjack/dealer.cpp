@@ -26,7 +26,7 @@ void Dealer::playOutHand(Shoe& shoe) {
     throw std::runtime_error("Dealer doesn't have a hand");
 
   while(shouldDrawCard()) {
-    hand->addCard(shoe.getCard());
+    hand->hit(shoe.getCard());
   }
 }
 

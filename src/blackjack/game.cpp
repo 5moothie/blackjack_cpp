@@ -40,7 +40,7 @@ void Game::play() {
 }
 
 int Game::bet() {
-  gameDisplay->showBettingScreen();
+  gameDisplay->showBettingScreen(player);
   int betAmount = inputTaker->getBet(player.getBalance());
     
   return betAmount;
@@ -50,8 +50,7 @@ BetweenHandActions Game::betweenHandsMenu() {
   if(shoe.needsReshuffle())
     shoe.reshuffle();
 
-  gameDisplay->showBetweenHandsMenu();
-  BetweenHandActions action = inputTaker->getBetweenHandsAction();
+  BetweenHandActions action = inputTaker->getBetweenHandsAction(player);
   return action;
 }
 
@@ -59,7 +58,7 @@ void Game::playHand(int bet) {
   player.playNewHand(bet, shoe);
   dealer.newHand(shoe);
 
-  gameDisplay->showTable();
+  gameDisplay->showTable(dealer, player);
 
   while(player.hasActiveHand()) {
     if(player.getActiveHandConst().isBlackjack()) {
@@ -67,8 +66,8 @@ void Game::playHand(int bet) {
       continue;
     }
     
-    gameDisplay->showTable();
-    HandActions action = inputTaker->getHandAction();
+    gameDisplay->showTable(dealer, player);
+    HandActions action = inputTaker->getHandAction(player);
     
     switch(action) {
       case HandActions::HIT:
@@ -87,9 +86,10 @@ void Game::playHand(int bet) {
   }
 
   dealer.playOutHand(shoe);
-  gameDisplay->showTable();
 
   player.settleHands(dealer.getHand());
+  gameDisplay->showHandResults(dealer, player);
+
   player.clearHands();
   dealer.clearHand();
 }
