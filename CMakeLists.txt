@@ -49,6 +49,7 @@ add_executable(
   tests/hand_test.cpp
   tests/card_test.cpp
   tests/deck_test.cpp
+  tests/shoe_test.cpp
 )
 
 target_link_libraries(
