@@ -48,6 +48,7 @@ add_executable(
   blackjack_tests
   tests/hand_test.cpp
   tests/card_test.cpp
+  tests/deck_test.cpp
 )
 
 target_link_libraries(
