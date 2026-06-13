@@ -60,6 +60,7 @@ HandActions RaylibInputTaker::getHandAction(const Player& player) {
     if (IsKeyPressed(KEY_H)) return HandActions::HIT;
     if (IsKeyPressed(KEY_S)) return HandActions::STAND;
     if (IsKeyPressed(KEY_D)) return HandActions::DOUBLE;
-    
+    if (IsKeyPressed(KEY_P)) return HandActions::SPLIT;
+
     return HandActions::NONE;
 }

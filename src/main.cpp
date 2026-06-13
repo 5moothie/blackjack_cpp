@@ -3,56 +3,35 @@
 #include "blackjack/game.hpp"
 #include "IO/inputTaker.hpp"
 #include "IO/gameDisplay.hpp"
-#include "IO/consoleInputTaker.hpp"
-#include "IO/consoleDisplay.hpp"
 #include "raylib.h"
 #include "IO/raylibDisplay.hpp"
+#include "IO/raylibInputTaker.hpp"
 
 /*
 TODOS:
-- Raylib frontend
 - tests for backend components
 */
 
 int main() {
-  //SetConsoleOutputCP(65001);
-
-  //std::unique_ptr<GameDisplay> gameDisplay = std::make_unique<ConsoleDisplay>();
-  //std::unique_ptr<InputTaker> inputTaker = std::make_unique<ConsoleInputTaker>();
-
-  //Game game(std::move(gameDisplay), std::move(inputTaker));
-  
-  //game.run();
-
-  InitWindow(800, 600, "Blackjack");
+  constexpr int screenWidth = 800;
+  constexpr int screenHeight = 600;
+  InitWindow(screenWidth, screenHeight, "Blackjack");
   SetTargetFPS(60);
 
-  RaylibDisplay display;
+  std::unique_ptr<GameDisplay> display = std::make_unique<RaylibDisplay>();
+  std::unique_ptr<InputTaker> input = std::make_unique<RaylibInputTaker>();
 
-  Player dummyPlayer(1000);
-  Dealer dummyDealer(false);
+  Game game(std::move(display), std::move(input));
 
-  int testScreen = 0;
-
-  while (!WindowShouldClose()) {
-    if (IsKeyPressed(KEY_SPACE)) {
-      if (testScreen == 0) testScreen = 1;
-      else testScreen = 0;
-    }
+  while (!WindowShouldClose() && game.getGameState() != GameState::EXIT) {
+    game.update();
 
     BeginDrawing();
     ClearBackground(BLACK);
-
-    //temporary
-    if (testScreen == 0) {
-      display.showMainMenu();
-    } else if (testScreen == 1) {
-      display.showTable(dummyDealer, dummyPlayer);
-    }
+    game.draw();
 
     EndDrawing();
   }
-
   CloseWindow();
 
   return 0;

@@ -29,8 +29,6 @@ add_library(blackjack_lib
   src/blackjack/dealer.cpp
   src/blackjack/player.cpp
   src/blackjack/game.cpp
-  src/IO/consoleDisplay.cpp
-  src/IO/consoleInputTaker.cpp
         src/IO/raylibDisplay.cpp
         src/IO/raylibInputTaker.cpp
 )

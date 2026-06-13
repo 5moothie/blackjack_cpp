@@ -11,4 +11,6 @@ public:
   virtual MainMenuActions getMenuAction() = 0;
   virtual BetweenHandActions getBetweenHandsAction(const Player& player) = 0;
   virtual HandActions getHandAction(const Player& player) = 0;
+  [[nodiscard]] virtual int getCurrentBetInput() const { return 0; }
+  [[nodiscard]] virtual std::string getErrorMessage() const { return ""; }
 };

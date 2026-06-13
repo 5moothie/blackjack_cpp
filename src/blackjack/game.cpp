@@ -50,10 +50,14 @@ void Game::update() {
                         player.standActiveHand();
                         break;
                     case HandActions::DOUBLE:
-                        player.doubleActiveHand(shoe);
+                        if (player.canDoubleActiveHand()) {
+                            player.doubleActiveHand(shoe);
+                        }
                         break;
                     case HandActions::SPLIT:
-                        player.splitActiveHand(shoe);
+                        if (player.canSplitActiveHand()) {
+                            player.splitActiveHand(shoe);
+                        }
                         break;
                     default:
                         break;
@@ -102,7 +106,7 @@ void Game::draw() {
             break;
 
         case GameState::BETTING:
-            gameDisplay->showBettingScreen(player);
+            gameDisplay->showBettingScreen(player, inputTaker->getCurrentBetInput(), inputTaker->getErrorMessage());
             break;
 
         case GameState::PLAYER_TURN:
