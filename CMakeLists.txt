@@ -32,6 +32,7 @@ add_library(blackjack_lib
   src/IO/consoleDisplay.cpp
   src/IO/consoleInputTaker.cpp
         src/IO/raylibDisplay.cpp
+        src/IO/raylibInputTaker.cpp
 )
 
 target_include_directories(
@@ -49,6 +50,8 @@ target_link_libraries(
 add_executable(
   blackjack
   src/main.cpp
+        include/IO/raylibInputTaker.hpp
+        src/IO/raylibInputTaker.cpp
 )
 
 target_link_libraries(
