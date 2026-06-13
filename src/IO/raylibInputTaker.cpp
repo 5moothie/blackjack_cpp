@@ -8,7 +8,44 @@ MainMenuActions RaylibInputTaker::getMenuAction() {
 }
 
 int RaylibInputTaker::getBet(const Player& player) {
-    if (IsKeyPressed(KEY_ENTER)) return 10;
+    int key = GetCharPressed();
+    while (key > 0) {
+        if ((key >= 48) && (key <= 57)) {
+            currentBetInput = currentBetInput * 10 + (key - 48);
+            betErrorMsg = "";
+        }
+        key = GetCharPressed();
+    }
+
+    if (IsKeyPressed(KEY_BACKSPACE)) {
+        currentBetInput /= 10;
+        betErrorMsg = "";
+    }
+
+    if (IsKeyPressed(KEY_ENTER)) {
+        if (currentBetInput == 0) {
+            return 0;
+        }
+
+        int balance = player.getBalance();
+
+        if (currentBetInput > balance) {
+            betErrorMsg = "Bet can't be more than your current balance, try again";
+            currentBetInput = 0;
+            return 0;
+        }
+
+        if (currentBetInput % 2 != 0) {
+            betErrorMsg = "Bet must be an even number, try again";
+            currentBetInput = 0;
+            return 0;
+        }
+
+        int finalBet = currentBetInput;
+        currentBetInput = 0;
+        betErrorMsg = "";
+        return finalBet;
+    }
     return 0;
 }
 

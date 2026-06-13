@@ -52,6 +52,7 @@ add_executable(
   src/main.cpp
         include/IO/raylibInputTaker.hpp
         src/IO/raylibInputTaker.cpp
+        include/IO/gameStates.hpp
 )
 
 target_link_libraries(

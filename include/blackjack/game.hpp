@@ -4,8 +4,10 @@
 #include "blackjack/player.hpp"
 #include "IO/gameDisplay.hpp"
 #include "IO/inputTaker.hpp"
+#include "IO/gameStates.hpp"
 
 #include <memory>
+
 
 
 class Game {
@@ -17,12 +19,13 @@ private:
   std::unique_ptr<GameDisplay> gameDisplay;
   std::unique_ptr<InputTaker> inputTaker;
 
-  void play();
-  int bet();
-  void playHand(int bet);
-  BetweenHandActions betweenHandsMenu();
+  GameState currentState;
+
 public:
   Game(std::unique_ptr<GameDisplay> display, std::unique_ptr<InputTaker> input);
 
-  void run();
+  [[nodiscard]] GameState getGameState() const{return currentState;};
+
+  void update();
+  void draw();
 };
