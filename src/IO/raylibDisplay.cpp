@@ -34,8 +34,7 @@ void RaylibDisplay::showBettingScreen(const Player& player, int currentBet, cons
 void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
     DrawText("TABLE", 250, 20, 20, LIGHTGRAY);
 
-    std::string actionsText="H - Hit | S - Stand";
-
+    std::string actionsText = "H - Hit | S - Stand";
     if (player.hasActiveHand()) {
         if (player.canDoubleActiveHand()) {
             actionsText += " | D - Double";
@@ -44,7 +43,6 @@ void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
             actionsText += " | P - Split";
         }
     }
-
     int actionsWidth = MeasureText(actionsText.c_str(), 20);
     DrawText(actionsText.c_str(), (GetScreenWidth() - actionsWidth) / 2, 550, 20, RAYWHITE);
 
@@ -54,8 +52,10 @@ void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
     int startY = 120;
 
     for (const auto& card : dealer.getHand().getCards()) {
-        Rectangle cardRec = { (float)startX, (float)startY, 90, 130 };
-        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
+        Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
+
+        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f
+                                    , 10, Fade(BLACK, 0.4f));
         DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
         DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
         DrawText(card.toString().c_str(), startX + 10, startY + 15, 18, BLACK);
@@ -63,20 +63,39 @@ void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
     }
 
     // PLAYER
-    DrawText(TextFormat("PLAYER (Balance: %d):", player.getBalance()), 100, 290, 20, BLUE);
+    DrawText(TextFormat("PLAYER (Balance: %d):", player.getBalance()), 100, 280, 20, BLUE);
     startX = 100;
-    startY = 330;
+    startY = 340;
+
+    size_t activeHandIndex = player.getAllHands().size() - player.handsLeftToPlay();
+    size_t currentHandIndex = 0;
+
+    bool hasSplit = player.getAllHands().size() > 1;
 
     for (const auto& hand : player.getAllHands()) {
+        bool isActiveHand = player.hasActiveHand() && (currentHandIndex == activeHandIndex);
+        bool shouldHighlight = isActiveHand && hasSplit;
+
+        if (shouldHighlight) {
+            DrawText("PLAYING", startX, startY - 20, 15, GREEN);
+        }
+
         for (const auto& card : hand.getCards()) {
-            Rectangle cardRec = { (float)startX, (float)startY, 90, 130 };
-            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
+            Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
+
+            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height},0.1f
+                                        ,10, Fade(BLACK, 0.4f));
             DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
-            DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
+
+            Color borderColor = shouldHighlight ? GREEN : DARKGRAY;
+            int borderWidth = shouldHighlight ? 4 : 2;
+            DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, borderWidth, borderColor);
+
             DrawText(card.toString().c_str(), startX + 10, startY + 15, 18, BLACK);
             startX += 100;
         }
         startX += 40;
+        currentHandIndex++;
     }
 }
 
@@ -89,8 +108,9 @@ void RaylibDisplay::showHandResults(const Dealer& dealer, const Player& player) 
     int startY = 120;
 
     for (const auto& card : dealer.getHand().getCards()) {
-        Rectangle cardRec = { (float)startX, (float)startY, 90, 130 };
-        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
+        Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
+        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f
+                                    ,10, Fade(BLACK, 0.4f));
         DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
         DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
         DrawText(card.toString().c_str(), startX + 10, startY + 15, 18, BLACK);
@@ -107,8 +127,9 @@ void RaylibDisplay::showHandResults(const Dealer& dealer, const Player& player) 
     for (const auto& hand : player.getAllHands()) {
         int handStartX = startX;
         for (const auto& card : hand.getCards()) {
-            Rectangle cardRec = { (float)startX, (float)startY, 90, 130 };
-            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
+            Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
+            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}
+                                        , 0.1f, 10, Fade(BLACK, 0.4f));
             DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
             DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
 
