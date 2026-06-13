@@ -11,9 +11,9 @@ Since the balance is int and bet is int for simplicity, the bets must be even. F
 */
 class Player {
 private:
-  std::vector<Hand> hands{};
+  int balance;
   size_t activeHand;
-  int balance; 
+  std::vector<Hand> hands{};
 
   
   Hand& getActiveHand();

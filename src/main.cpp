@@ -13,8 +13,8 @@ TODOS:
 */
 
 int main() {
-  constexpr int screenWidth = 800;
-  constexpr int screenHeight = 600;
+  constexpr int screenWidth = 1200;
+  constexpr int screenHeight = 800;
   InitWindow(screenWidth, screenHeight, "Blackjack");
   SetTargetFPS(60);
 
@@ -27,11 +27,13 @@ int main() {
     game.update();
 
     BeginDrawing();
+
     ClearBackground(BLACK);
     game.draw();
 
     EndDrawing();
   }
+
   CloseWindow();
 
   return 0;

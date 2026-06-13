@@ -4,7 +4,7 @@
 #include "blackjack/player.hpp"
 #include "IO/gameDisplay.hpp"
 #include "IO/inputTaker.hpp"
-#include "IO/gameStates.hpp"
+#include "gameStates.hpp"
 
 #include <memory>
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "IO/actions.hpp"
+#include "../blackjack/actions.hpp"
 
 #include "blackjack/player.hpp"
 

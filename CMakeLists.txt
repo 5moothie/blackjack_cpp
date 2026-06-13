@@ -50,7 +50,7 @@ add_executable(
   src/main.cpp
         include/IO/raylibInputTaker.hpp
         src/IO/raylibInputTaker.cpp
-        include/IO/gameStates.hpp
+        include/blackjack/gameStates.hpp
 )
 
 target_link_libraries(
@@ -82,6 +82,3 @@ add_test(
   NAME all_tests
   COMMAND blackjack_tests
 )
-
-# find_package(raylib CONFIG REQUIRED)
-# target_link_libraries(blackjack PRIVATE raylib)

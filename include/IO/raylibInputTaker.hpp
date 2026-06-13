@@ -13,6 +13,6 @@ public:
     BetweenHandActions getBetweenHandsAction(const Player& player) override;
     HandActions getHandAction(const Player& player) override;
 
-    [[nodiscard]] int getCurrentBetInput() const { return currentBetInput; }
-    [[nodiscard]] std::string getErrorMessage() const { return betErrorMsg; }
+    [[nodiscard]] int getCurrentBetInput() const override { return currentBetInput; } ;
+    [[nodiscard]] std::string getErrorMessage() const override { return betErrorMsg; }
 };
