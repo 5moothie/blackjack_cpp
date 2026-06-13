@@ -10,6 +10,7 @@
 /*
 TODOS:
 - tests for backend components
+- card images
 */
 
 int main() {
