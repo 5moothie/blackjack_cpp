@@ -11,6 +11,9 @@ void Game::update() {
         case GameState::MAIN_MENU: {
             MainMenuActions action = inputTaker->getMenuAction();
             if (action == MainMenuActions::PLAY) {
+                if (player.getBalance() <= 0) {
+                    player.setBalance(1000);
+                }
                 currentState = GameState::BETTING;
             } else if (action == MainMenuActions::QUIT) {
                 currentState = GameState::EXIT;
@@ -82,9 +85,11 @@ void Game::update() {
             BetweenHandActions action = inputTaker->getBetweenHandsAction(player);
 
             if (action == BetweenHandActions::NEXT_HAND) {
-                player.clearHands();
-                dealer.clearHand();
-                currentState = GameState::BETTING;
+                if (player.getBalance() > 0) {
+                    player.clearHands();
+                    dealer.clearHand();
+                    currentState = GameState::BETTING;
+                }
             }
             else if (action == BetweenHandActions::MAIN_MENU) {
                 player.clearHands();

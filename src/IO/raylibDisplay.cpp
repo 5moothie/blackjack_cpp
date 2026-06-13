@@ -142,5 +142,10 @@ void RaylibDisplay::showHandResults(const Dealer& dealer, const Player& player) 
 
         startX += 40;
     }
-    DrawText("N - Next Hand  |  M - Main Menu", 180, 530, 20, LIGHTGRAY);
+    if (player.getBalance() <= 0) {
+        DrawText("GAME OVER! YOU ARE BROKE!", 230, 475, 20, RED);
+        DrawText("M - Main Menu", 280, 530, 20, LIGHTGRAY);
+    } else {
+        DrawText("N - Next Hand  |  M - Main Menu", 180, 530, 20, LIGHTGRAY);
+    }
 }

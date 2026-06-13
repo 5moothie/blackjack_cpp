@@ -38,4 +38,5 @@ public:
   void settleHands(const Hand& dealersHand);
   void clearHands() noexcept;
   void playNewHand(int bet, Shoe& shoe);
+  void setBalance(int amount) noexcept { balance = amount; }
 };
