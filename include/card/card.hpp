@@ -18,5 +18,5 @@ public:
 
   [[nodiscard]] std::string rankToString() const noexcept;
   [[nodiscard]] std::string suitToString() const noexcept;
-  [[nodiscard]] std::string toString() const noexcept {return rankToString() + ' ' + suitToString();}
+  [[nodiscard]] std::string toString() const noexcept {return "../assets/cards/" + rankToString() + "_" + suitToString() + ".png";}
 };

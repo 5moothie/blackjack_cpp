@@ -1,4 +1,15 @@
 #include "IO/raylibDisplay.hpp"
+#include <unordered_map>
+#include <string>
+
+static std::unordered_map<std::string, Texture2D> textureCache;
+
+static Texture2D getCachedTexture(const std::string& path) {
+    if (textureCache.find(path) == textureCache.end()) {
+        textureCache[path] = LoadTexture(path.c_str());
+    }
+    return textureCache[path];
+}
 
 void RaylibDisplay::showMainMenu() {
     int screenWidth = GetScreenWidth();
@@ -65,22 +76,25 @@ void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
     int actionsWidth = MeasureText(actionsText.c_str(), 20);
     DrawText(actionsText.c_str(), (screenWidth - actionsWidth) / 2, screenHeight - 50, 20, RAYWHITE);
 
-    // DEALER
     DrawText("DEALER:", 100, 80, 20, RED);
     int startX = 100;
     int startY = 120;
 
     for (const auto& card : dealer.getHand().getCards()) {
-        Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
+        Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 120, 168 };
 
-        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
-        DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
+        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f,
+            10, Fade(BLACK, 0.4f));
+
+        Texture2D tex = getCachedTexture(card.toString());
+        DrawTexturePro(tex, { 0.0f, 0.0f, static_cast<float>(tex.width), static_cast<float>(tex.height) },
+            cardRec, { 0.0f, 0.0f }, 0.0f, WHITE);
+
         DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
-        DrawText(card.toString().c_str(), startX + 10, startY + 15, 18, BLACK);
-        startX += 100;
+
+        startX += 135;
     }
 
-    // PLAYER
     int playerTextY = screenHeight / 2 + 20;
     DrawText(TextFormat("PLAYER (Balance: %d):", player.getBalance()), 100, playerTextY, 20, BLUE);
     startX = 100;
@@ -100,19 +114,22 @@ void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
         }
 
         for (const auto& card : hand.getCards()) {
-            Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
+            Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 120, 168 };
 
-            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
-            DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
+            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f,
+                10, Fade(BLACK, 0.4f));
+
+            Texture2D tex = getCachedTexture(card.toString());
+            DrawTexturePro(tex, { 0.0f, 0.0f, static_cast<float>(tex.width), static_cast<float>(tex.height) },
+                cardRec, { 0.0f, 0.0f }, 0.0f, WHITE);
 
             Color borderColor = shouldHighlight ? GREEN : DARKGRAY;
             int borderWidth = shouldHighlight ? 4 : 2;
             DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, borderWidth, borderColor);
 
-            DrawText(card.toString().c_str(), startX + 10, startY + 15, 18, BLACK);
-            startX += 100;
+            startX += 135;
         }
-        startX += 40;
+        startX += 50;
         currentHandIndex++;
     }
 }
@@ -125,22 +142,25 @@ void RaylibDisplay::showHandResults(const Dealer& dealer, const Player& player) 
     int titleWidth = MeasureText(title, 40);
     DrawText(title, (screenWidth - titleWidth) / 2, 20, 40, YELLOW);
 
-    // DEALER
     DrawText("DEALER:", 100, 80, 20, RED);
     int startX = 100;
     int startY = 120;
 
     for (const auto& card : dealer.getHand().getCards()) {
-        Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
-        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
-        DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
-        DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
-        DrawText(card.toString().c_str(), startX + 10, startY + 15, 18, BLACK);
+        Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 120, 168 };
 
-        startX += 100;
+        DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f,
+            10, Fade(BLACK, 0.4f));
+
+        Texture2D tex = getCachedTexture(card.toString());
+        DrawTexturePro(tex, { 0.0f, 0.0f, static_cast<float>(tex.width), static_cast<float>(tex.height) },
+            cardRec, { 0.0f, 0.0f }, 0.0f, WHITE);
+
+        DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
+
+        startX += 135;
     }
 
-    // PLAYER
     int playerTextY = screenHeight / 2 + 20;
     DrawText(TextFormat("PLAYER (Balance: %d):", player.getBalance()), 100, playerTextY, 20, BLUE);
     startX = 100;
@@ -150,40 +170,44 @@ void RaylibDisplay::showHandResults(const Dealer& dealer, const Player& player) 
     for (const auto& hand : player.getAllHands()) {
         int handStartX = startX;
         for (const auto& card : hand.getCards()) {
-            Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 90, 130 };
-            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f, 10, Fade(BLACK, 0.4f));
-            DrawRectangleRounded(cardRec, 0.1f, 10, RAYWHITE);
+            Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), 120, 168 };
+
+            DrawRectangleRounded({cardRec.x + 5, cardRec.y + 5, cardRec.width, cardRec.height}, 0.1f,
+                10, Fade(BLACK, 0.4f));
+
+            Texture2D tex = getCachedTexture(card.toString());
+            DrawTexturePro(tex, { 0.0f, 0.0f, static_cast<float>(tex.width), static_cast<float>(tex.height) },
+                cardRec, { 0.0f, 0.0f }, 0.0f, WHITE);
+
             DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, 2, DARKGRAY);
 
-            DrawText(card.toString().c_str(), startX + 10, startY + 15, 18, BLACK);
-            startX += 100;
+            startX += 135;
         }
 
-        // RESULTS
         if (hand.isBust()) {
-            DrawText("BUST!", handStartX, startY + 145, 20, RED);
+            DrawText("BUST!", handStartX, startY + 190, 20, RED);
         }
         else if (hand.isBlackjack()) {
             if (dealersHand.isBlackjack()) {
-                DrawText("PUSH (Tie)", handStartX, startY + 145, 20, GRAY);
+                DrawText("PUSH (Tie)", handStartX, startY + 190, 20, GRAY);
             } else {
-                DrawText("BLACKJACK!", handStartX, startY + 145, 20, GOLD);
+                DrawText("BLACKJACK!", handStartX, startY + 190, 20, GOLD);
             }
         }
         else if (dealersHand.isBlackjack()) {
-            DrawText("LOST", handStartX, startY + 145, 20, RED);
+            DrawText("LOST", handStartX, startY + 190, 20, RED);
         }
         else if (dealersHand.isBust() || hand.getValue() > dealersHand.getValue()) {
-            DrawText("WON!", handStartX, startY + 145, 20, GREEN);
+            DrawText("WON!", handStartX, startY + 190, 20, GREEN);
         }
         else if (hand.getValue() < dealersHand.getValue()) {
-            DrawText("LOST", handStartX, startY + 145, 20, RED);
+            DrawText("LOST", handStartX, startY + 190, 20, RED);
         }
         else {
-            DrawText("PUSH", handStartX, startY + 145, 20, GRAY);
+            DrawText("PUSH", handStartX, startY + 190, 20, GRAY);
         }
 
-        startX += 40;
+        startX += 50;
     }
 
     if (player.getBalance() <= 0) {
