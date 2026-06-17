@@ -6,15 +6,10 @@
 #include "IO/raylibDisplay.hpp"
 #include "IO/raylibInputTaker.hpp"
 
-/*
-TODOS:
-- tests for backend components
-- card images
-*/
 
 int main() {
-  constexpr int screenWidth = 1200;
-  constexpr int screenHeight = 800;
+  constexpr int screenWidth = 1400;
+  constexpr int screenHeight = 1000;
   InitWindow(screenWidth, screenHeight, "Blackjack");
   SetTargetFPS(60);
 
