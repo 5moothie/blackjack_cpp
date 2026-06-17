@@ -12,8 +12,8 @@ Hand is a one round class - after a round it should be destroyed and a new hand 
 
 class Hand {
 private:
-  std::vector<Card> cards{};
   int bet;
+  std::vector<Card> cards{};
   bool hasBeenSplit{false};
 
 
@@ -21,7 +21,7 @@ private:
     int value;
     int acesCount;
   };
-  HandScore calculateScore() const noexcept;
+  [[nodiscard]] HandScore calculateScore() const noexcept;
   
 public:
   Hand(int bet): bet(bet) {}
@@ -38,8 +38,8 @@ public:
   [[nodiscard]] bool isBlackjack() const noexcept {return getValue() == 21 && getSize() == 2 && !hasBeenSplit;}
   [[nodiscard]] bool isSoft() const noexcept;
 
-  bool canDouble() const noexcept;
-  bool canSplit() const noexcept;
+  [[nodiscard]] bool canDouble() const noexcept;
+  [[nodiscard]] bool canSplit() const noexcept;
 
   void hit(Card card) noexcept;
   void double_(Card card);

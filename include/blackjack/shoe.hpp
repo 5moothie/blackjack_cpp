@@ -30,5 +30,5 @@ public:
   void reshuffle() noexcept;
 
   // if there is <= cutCard decks left in the shoe - needs reshuffle will be true
-  bool needsReshuffle() const noexcept;
+  [[nodiscard]] bool needsReshuffle() const noexcept;
 };

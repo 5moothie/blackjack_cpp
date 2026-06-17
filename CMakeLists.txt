@@ -12,6 +12,14 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
   GIT_TAG v3.15.0
 )
+FetchContent_MakeAvailable(Catch2)
+
+FetchContent_Declare(
+        raylib
+        GIT_REPOSITORY https://github.com/raysan5/raylib.git
+        GIT_TAG master
+)
+FetchContent_MakeAvailable(raylib)
 
 add_library(blackjack_lib
   src/card/card.cpp
@@ -21,8 +29,8 @@ add_library(blackjack_lib
   src/blackjack/dealer.cpp
   src/blackjack/player.cpp
   src/blackjack/game.cpp
-  src/IO/consoleDisplay.cpp
-  src/IO/consoleInputTaker.cpp
+        src/IO/raylibDisplay.cpp
+        src/IO/raylibInputTaker.cpp
 )
 
 target_include_directories(
@@ -31,18 +39,27 @@ target_include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+target_link_libraries(
+        blackjack_lib
+        PUBLIC
+        raylib
+)
+
 add_executable(
   blackjack
   src/main.cpp
+        include/IO/raylibInputTaker.hpp
+        src/IO/raylibInputTaker.cpp
+        include/blackjack/gameStates.hpp
 )
 
 target_link_libraries(
   blackjack
   PRIVATE
   blackjack_lib
+        raylib
 )
 
-FetchContent_MakeAvailable(Catch2)
 
 add_executable(
   blackjack_tests
@@ -65,6 +82,3 @@ add_test(
   NAME all_tests
   COMMAND blackjack_tests
 )
-
-# find_package(raylib CONFIG REQUIRED)
-# target_link_libraries(blackjack PRIVATE raylib)
