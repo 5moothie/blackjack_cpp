@@ -1,4 +1,3 @@
-#include <iostream>
 #include <memory>
 #include "blackjack/game.hpp"
 #include "IO/inputTaker.hpp"
