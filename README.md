@@ -73,4 +73,7 @@ katalogu `build` i uruchom go bezpośrednio.
 ## Użycie AI
 
 - wybór biblioteki interfejsu graficznego (raylib) - ChatGPT
-- Dokument `README.md` wygenerowny przy pomocy AI - GPT-5 mini (GitHub Copilot).
+- Dokument `README.md` wygenerowny przy pomocy AI - GPT-5 mini (GitHub Copilot)
+- testy
+- template CMake (ChatGPT)
+- generowanie obrazów kart (ChatGPT)
