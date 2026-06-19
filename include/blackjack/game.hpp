@@ -20,6 +20,7 @@ private:
   std::unique_ptr<InputTaker> inputTaker;
 
   GameState currentState;
+  bool dealerTurnPending{false};
 
 public:
   Game(std::unique_ptr<GameDisplay> display, std::unique_ptr<InputTaker> input);

@@ -26,6 +26,7 @@ void Game::update() {
             if (betAmount > 0) {
                 player.playNewHand(betAmount, shoe);
                 dealer.newHand(shoe);
+                dealerTurnPending = false;
                 currentState = GameState::PLAYER_TURN;
             }
             break;
@@ -33,6 +34,7 @@ void Game::update() {
 
         case GameState::PLAYER_TURN: {
             if (!player.hasActiveHand()) {
+                this->dealerTurnPending = false;
                 currentState = GameState::DEALER_TURN;
                 break;
             }
@@ -70,9 +72,15 @@ void Game::update() {
         }
 
         case GameState::DEALER_TURN: {
+            if (!this->dealerTurnPending) {
+                this->dealerTurnPending = true;
+                break;
+            }
+
             dealer.playOutHand(shoe);
             player.settleHands(dealer.getHand());
 
+            this->dealerTurnPending = false;
             currentState = GameState::RESULTS;
             break;
         }
@@ -88,12 +96,14 @@ void Game::update() {
                 if (player.getBalance() > 0) {
                     player.clearHands();
                     dealer.clearHand();
+                    this->dealerTurnPending = false;
                     currentState = GameState::BETTING;
                 }
             }
             else if (action == BetweenHandActions::MAIN_MENU) {
                 player.clearHands();
                 dealer.clearHand();
+                this->dealerTurnPending = false;
                 currentState = GameState::MAIN_MENU;
             }
             break;
@@ -116,7 +126,7 @@ void Game::draw() {
 
         case GameState::PLAYER_TURN:
         case GameState::DEALER_TURN:
-            gameDisplay->showTable(dealer, player);
+            gameDisplay->showTable(dealer, player, currentState == GameState::DEALER_TURN);
             break;
 
         case GameState::RESULTS:

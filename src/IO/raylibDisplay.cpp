@@ -1,4 +1,5 @@
 #include "IO/raylibDisplay.hpp"
+#include "raylib.h"
 #include <unordered_map>
 #include <string>
 #include <algorithm>
@@ -76,7 +77,7 @@ void RaylibDisplay::showBettingScreen(const Player& player, int currentBet, cons
     }
 }
 
-void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
+void RaylibDisplay::showTable(const Dealer& dealer, const Player& player, bool revealDealerHand) {
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
     float scale = getUIScale();
@@ -110,6 +111,7 @@ void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
     int borderWidthNorm = std::max(1, static_cast<int>(2 * scale));
     int borderWidthHigh = std::max(2, static_cast<int>(4 * scale));
 
+    size_t dealerCardIndex = 0;
     for (const auto& card : dealer.getHand().getCards()) {
         Rectangle cardRec = { static_cast<float>(startX), static_cast<float>(startY), cardW, cardH };
 
@@ -117,13 +119,26 @@ void RaylibDisplay::showTable(const Dealer& dealer, const Player& player) {
             0.1f,
             10, Fade(BLACK, 0.4f));
 
-        Texture2D tex = getCachedTexture(card.toString());
-        DrawTexturePro(tex, { 0.0f, 0.0f, static_cast<float>(tex.width), static_cast<float>(tex.height) },
-            cardRec, { 0.0f, 0.0f }, 0.0f, WHITE);
-
-        DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, borderWidthNorm, DARKGRAY);
+        if (!revealDealerHand && dealerCardIndex == 0) {
+            DrawRectangleRounded(cardRec, 0.1f, 10, DARKBLUE);
+            DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, borderWidthNorm, SKYBLUE);
+            const char* hiddenText = "?";
+            int hiddenTextSize = std::max(1, static_cast<int>(44 * scale));
+            int hiddenTextWidth = MeasureText(hiddenText, hiddenTextSize);
+            DrawText(hiddenText,
+                static_cast<int>(cardRec.x + (cardRec.width - hiddenTextWidth) / 2),
+                static_cast<int>(cardRec.y + (cardRec.height - static_cast<float>(hiddenTextSize)) / 2.0f),
+                hiddenTextSize,
+                RAYWHITE);
+        } else {
+            Texture2D tex = getCachedTexture(card.toString());
+            DrawTexturePro(tex, { 0.0f, 0.0f, static_cast<float>(tex.width), static_cast<float>(tex.height) },
+                cardRec, { 0.0f, 0.0f }, 0.0f, WHITE);
+            DrawRectangleRoundedLinesEx(cardRec, 0.1f, 10, borderWidthNorm, DARKGRAY);
+        }
 
         startX += spacing;
+        dealerCardIndex++;
     }
 
     int playerTextY = screenHeight / 2 + static_cast<int>(20 * scale);

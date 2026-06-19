@@ -8,8 +8,8 @@
 
 
 int main() {
-  constexpr int screenWidth = 1400;
-  constexpr int screenHeight = 1000;
+  constexpr int screenWidth = 2560;
+  constexpr int screenHeight = 1600;
   InitWindow(screenWidth, screenHeight, "Blackjack");
   SetTargetFPS(60);
 
