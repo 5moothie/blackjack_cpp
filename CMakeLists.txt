@@ -15,13 +15,14 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 
 FetchContent_Declare(
-        raylib
-        GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG master
+  raylib
+  GIT_REPOSITORY https://github.com/raysan5/raylib.git
+  GIT_TAG master
 )
 FetchContent_MakeAvailable(raylib)
 
-add_library(blackjack_lib
+add_library(
+  blackjack_lib
   src/card/card.cpp
   src/blackjack/hand.cpp
   src/card/deck.cpp
@@ -29,8 +30,8 @@ add_library(blackjack_lib
   src/blackjack/dealer.cpp
   src/blackjack/player.cpp
   src/blackjack/game.cpp
-        src/IO/raylibDisplay.cpp
-        src/IO/raylibInputTaker.cpp
+  src/IO/raylibDisplay.cpp
+  src/IO/raylibInputTaker.cpp
 )
 
 target_include_directories(
@@ -40,24 +41,24 @@ target_include_directories(
 )
 
 target_link_libraries(
-        blackjack_lib
-        PUBLIC
-        raylib
+  blackjack_lib
+  PUBLIC
+  raylib
 )
 
 add_executable(
   blackjack
-  src/main.cpp
-        include/IO/raylibInputTaker.hpp
-        src/IO/raylibInputTaker.cpp
-        include/blackjack/gameStates.hpp
+  src/IO/main_IO.cpp
+  include/IO/raylibInputTaker.hpp
+  src/IO/raylibInputTaker.cpp
+  include/blackjack/gameStates.hpp
 )
 
 target_link_libraries(
   blackjack
   PRIVATE
   blackjack_lib
-        raylib
+  raylib
 )
 
 
