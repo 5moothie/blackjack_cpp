@@ -1,10 +1,12 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "card/deck.hpp"
+#include "card/suit.hpp"
+#include <exception>
 #include <set>
+#include <stdexcept>
 
-TEST_CASE("Deck contains 52 cards")
-{
+TEST_CASE("Deck contains 52 cards") {
   Deck deck;
 
   auto cards = std::move(deck).releaseCards();
@@ -12,8 +14,7 @@ TEST_CASE("Deck contains 52 cards")
   REQUIRE(cards.size() == 52);
 }
 
-TEST_CASE("Deck contains every card exactly once")
-{
+TEST_CASE("Deck contains every card exactly once") {
   Deck deck;
   auto cards = std::move(deck).releaseCards();
 
@@ -30,8 +31,7 @@ TEST_CASE("Deck contains every card exactly once")
   REQUIRE(uniqueCards.size() == 52);
 }
 
-TEST_CASE("Deck contains 13 cards of each suit")
-{
+TEST_CASE("Deck contains 13 cards of each suit") {
   Deck deck;
   auto cards = std::move(deck).releaseCards();
 
@@ -55,4 +55,12 @@ TEST_CASE("Deck contains 13 cards of each suit")
   REQUIRE(diamonds == 13);
   REQUIRE(clubs == 13);
   REQUIRE(spades == 13);
+}
+
+TEST_CASE("Deck throws on second release") {
+  Deck deck;
+
+  auto cards = std::move(deck).releaseCards();
+  
+  REQUIRE_THROWS(std::move(deck).releaseCards());
 }
