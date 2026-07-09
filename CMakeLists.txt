@@ -6,26 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(blackjack
-  include/card/card.hpp
-  include/card/suit.hpp
-  include/card/rank.hpp
-  include/blackjack/components/hand.hpp
-  include/card/deck.hpp
-  include/blackjack/components/shoe.hpp
-  include/blackjack/components/dealer.hpp
-  include/blackjack/components/player.hpp
-  include/blackjack/game.hpp
-  include/blackjack/IO/actions.hpp
-  include/blackjack/IO/gameDisplay.hpp
-  include/blackjack/IO/inputTaker.hpp
-  include/blackjack/IO/consoleDisplay.hpp
-  include/blackjack/IO/consoleInputTaker.hpp
+# ================= blackjack lib ======================
 
-  src/main.cpp
+add_library(blackjack_lib
   src/card/card.cpp
-  src/blackjack/components/hand.cpp
   src/card/deck.cpp
+  src/blackjack/components/hand.cpp
   src/blackjack/components/shoe.cpp
   src/blackjack/components/dealer.cpp
   src/blackjack/components/player.cpp
@@ -34,4 +20,39 @@ add_executable(blackjack
   src/blackjack/IO/consoleInputTaker.cpp
 )
 
-target_include_directories(blackjack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(blackjack_lib PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# ================ main ==============
+add_executable(blackjack
+  src/main.cpp
+)
+
+target_link_libraries(blackjack PRIVATE blackjack_lib)
+
+# ============== tests ================ 
+
+enable_testing()
+
+find_package(Catch2 3 REQUIRED)
+
+add_executable(blackjack_tests
+  tests/card/card_test.cpp
+  tests/card/deck_test.cpp
+  tests/card/shoe_test.cpp
+)
+
+target_link_libraries(blackjack_tests 
+  PRIVATE 
+  blackjack_lib 
+  Catch2::Catch2WithMain 
+)
+
+target_include_directories(blackjack_tests PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+include(CTest)
+include(Catch)
+catch_discover_tests(blackjack_tests)

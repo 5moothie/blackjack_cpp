@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "blackjack/shoe.hpp"
+#include "blackjack/components/shoe.hpp"
 
 TEST_CASE("Fresh shoe does not need reshuffle")
 {
