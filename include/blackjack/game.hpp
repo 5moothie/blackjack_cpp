@@ -1,9 +1,9 @@
 #pragma once
 
-#include "blackjack/dealer.hpp"
-#include "blackjack/player.hpp"
-#include "IO/gameDisplay.hpp"
-#include "IO/inputTaker.hpp"
+#include "blackjack/components/dealer.hpp"
+#include "blackjack/components/player.hpp"
+#include "blackjack/IO/gameDisplay.hpp"
+#include "blackjack/IO/inputTaker.hpp"
 
 #include <memory>
 

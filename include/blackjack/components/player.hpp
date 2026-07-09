@@ -1,7 +1,7 @@
 #pragma once
 
-#include "blackjack/hand.hpp"
-#include "blackjack/shoe.hpp"
+#include "blackjack/components/hand.hpp"
+#include "blackjack/components/shoe.hpp"
 
 #include <vector>
 

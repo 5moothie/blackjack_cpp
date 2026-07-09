@@ -1,4 +1,4 @@
-#include "blackjack/dealer.hpp"
+#include "blackjack/components/dealer.hpp"
 #include <stdexcept>
 
 bool Dealer::shouldDrawCard() const noexcept { 

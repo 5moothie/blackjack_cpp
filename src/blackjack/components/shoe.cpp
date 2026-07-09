@@ -1,7 +1,7 @@
 #include <random>
 #include <algorithm>
 
-#include "blackjack/shoe.hpp"
+#include "blackjack/components/shoe.hpp"
 #include "card/deck.hpp"
 #include <stdexcept>
 

@@ -1,7 +1,7 @@
 #pragma once
-#include "IO/actions.hpp"
+#include "blackjack/IO/actions.hpp"
 
-#include "blackjack/player.hpp"
+#include "blackjack/components/player.hpp"
 
 class InputTaker {
 public:

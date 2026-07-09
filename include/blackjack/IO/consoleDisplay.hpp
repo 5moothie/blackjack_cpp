@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IO/gameDisplay.hpp"
-#include "blackjack/dealer.hpp"
-#include "blackjack/player.hpp"
+#include "blackjack/IO/gameDisplay.hpp"
+#include "blackjack/components/dealer.hpp"
+#include "blackjack/components/player.hpp"
 
 class ConsoleDisplay : public GameDisplay {
 private:

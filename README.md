@@ -12,6 +12,5 @@ Future goals:
 - the game itself
 
 TODOS:
-- remove the current UI and go back to the console type for now
-- remaining tests for everything
-- restructure the structure to blackjack/components, blackjack/game, blackjack/game/IO
+- remaining tests for cards and components
+- add settings and most popular settings

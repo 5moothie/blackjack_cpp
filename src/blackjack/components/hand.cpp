@@ -1,4 +1,4 @@
-#include "blackjack/hand.hpp"
+#include "blackjack/components/hand.hpp"
 #include <stdexcept>
 
 Hand::HandScore Hand::calculateScore() const noexcept {

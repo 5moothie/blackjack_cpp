@@ -1,7 +1,7 @@
 #pragma once
 
-#include "blackjack/dealer.hpp"
-#include "blackjack/player.hpp"
+#include "blackjack/components/dealer.hpp"
+#include "blackjack/components/player.hpp"
 
 
 class GameDisplay {

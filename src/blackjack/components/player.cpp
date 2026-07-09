@@ -1,4 +1,4 @@
-#include "blackjack/player.hpp"
+#include "blackjack/components/player.hpp"
 #include <stdexcept>
 
 Hand& Player::getActiveHand() {

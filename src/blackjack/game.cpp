@@ -1,5 +1,5 @@
 #include "blackjack/game.hpp"
-#include "IO/actions.hpp"
+#include "blackjack/IO/actions.hpp"
 
 Game::Game(std::unique_ptr<GameDisplay> display, std::unique_ptr<InputTaker> input)
     : dealer(false), player(1000), shoe(6, 1.5), gameDisplay(std::move(display)), inputTaker(std::move(input))

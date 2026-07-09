@@ -2,10 +2,10 @@
 #include<windows.h>
 #include <memory>
 #include "blackjack/game.hpp"
-#include "IO/inputTaker.hpp"
-#include "IO/gameDisplay.hpp"
-#include "IO/consoleInputTaker.hpp"
-#include "IO/consoleDisplay.hpp"
+#include "blackjack/IO/inputTaker.hpp"
+#include "blackjack/IO/gameDisplay.hpp"
+#include "blackjack/IO/consoleInputTaker.hpp"
+#include "blackjack/IO/consoleDisplay.hpp"
 
 /*
 TODOS:
