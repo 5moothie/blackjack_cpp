@@ -7,6 +7,15 @@
 
 Shoe::Shoe(size_t numberOfDecks, float cutCard): 
             numberOfDecks(numberOfDecks), cutCard(cutCard) {
+  if(numberOfDecks < 1)
+    throw std::invalid_argument("There must be at least one deck in a shoe");
+
+  if(cutCard < 0)
+    throw std::invalid_argument("The cutcard has to be positive.");
+
+  if(cutCard >=numberOfDecks)
+    throw std::invalid_argument("The cutcard has to be before the end of the shoe.");
+
   fill(); 
   shuffle();
 }
@@ -45,6 +54,6 @@ void Shoe::reshuffle() noexcept {
 }
 
 bool Shoe::needsReshuffle() const noexcept {
-  int reshuffleBelow = (int)(numberOfDecks * cutCard);
+  int reshuffleBelow = (int)(cutCard * 52);
   return cards.size() <= reshuffleBelow;
 }

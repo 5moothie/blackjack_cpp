@@ -40,7 +40,7 @@ find_package(Catch2 3 REQUIRED)
 add_executable(blackjack_tests
   tests/card/card_test.cpp
   tests/card/deck_test.cpp
-  # tests/card/shoe_test.cpp
+  tests/blackjack/components/shoe_test.cpp
 )
 
 target_link_libraries(blackjack_tests 
