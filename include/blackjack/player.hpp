@@ -11,9 +11,9 @@ Since the balance is int and bet is int for simplicity, the bets must be even. F
 */
 class Player {
 private:
-  int balance;
-  size_t activeHand;
   std::vector<Hand> hands{};
+  size_t activeHand;
+  int balance; 
 
   
   Hand& getActiveHand();
@@ -38,5 +38,4 @@ public:
   void settleHands(const Hand& dealersHand);
   void clearHands() noexcept;
   void playNewHand(int bet, Shoe& shoe);
-  void setBalance(int amount) noexcept { balance = amount; }
 };

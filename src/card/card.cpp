@@ -32,10 +32,10 @@ std::string Card::rankToString() const noexcept {
     case Rank::Eight: return "8";
     case Rank::Nine: return "9"; 
     case Rank::Ten: return "10";
-    case Rank::Jack: return "jack";
-    case Rank::Queen: return "queen";
-    case Rank::King: return "king";
-    case Rank::Ace: return "ace";
+    case Rank::Jack: return "J"; 
+    case Rank::Queen: return "Q"; 
+    case Rank::King: return "K"; 
+    case Rank::Ace: return "A"; 
   }
   assert(false && "Osiągnięto teoretycznie nieosiągalny kod w Card:rankToString");
   __builtin_unreachable();
@@ -43,11 +43,11 @@ std::string Card::rankToString() const noexcept {
 
 
 std::string Card::suitToString() const noexcept {
-  switch(suit) {
-    case Suit::Spades: return "spades";
-    case Suit::Hearts: return "hearts";
-    case Suit::Diamonds: return "diamonds";
-    case Suit::Clubs: return "clubs";
+  switch (suit) {
+    case Suit::Spades: return "♠";
+    case Suit::Hearts: return "♥";
+    case Suit::Diamonds: return "♦";
+    case Suit::Clubs: return "♣";
   }
   assert(false && "Osiągnięto teoretycznie nieosiągalny kod w Card:suitToString");
   __builtin_unreachable();
