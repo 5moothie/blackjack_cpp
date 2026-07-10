@@ -21,7 +21,7 @@ private:
   HandScore calculateScore() const noexcept;
   
 public:
-  Hand() {}
+  Hand() = default;
   Hand(Card card): cards{std::move(card)} {}
   Hand(Card card1, Card card2): cards{std::move(card1), std::move(card2)} {}
 

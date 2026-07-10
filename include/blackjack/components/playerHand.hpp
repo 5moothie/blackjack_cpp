@@ -25,8 +25,8 @@ public:
   [[nodiscard]] std::string toString() const noexcept { return hand.toString(); }
 
   [[nodiscard]] int getValue() const noexcept { return hand.getValue(); }
-  [[nodiscard]] bool isBust() const noexcept { return hand.getValue() > 21; }
-  [[nodiscard]] bool isBlackjack() const noexcept { return hand.getValue() == 21 && hand.getSize() == 2 && splitCounter == 0; }
+  [[nodiscard]] bool isBust() const noexcept { return hand.isBust(); }
+  [[nodiscard]] bool isBlackjack() const noexcept { return hand.isBlackjack() && splitCounter == 0; }
   [[nodiscard]] bool isSoft() const noexcept { return hand.isSoft(); };
 
   bool canDouble(int balance) const noexcept;
