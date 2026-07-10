@@ -42,24 +42,16 @@ bool Hand::canDouble() const noexcept {
   return getSize() == 2;
 }
 
-void Hand::double_(Card card) {
-  if(!canDouble())
-    throw std::runtime_error("the hand being doubled cannot be doubled");
-  cards.push_back(std::move(card));
-  bet*=2;
-}
-
 bool Hand::canSplit() const noexcept {
   return getSize() == 2 && cards[0].getRank() == cards[1].getRank();
 }
 
-Hand Hand::split() {
+Card Hand::removeCardForSplit() {
   if(!canSplit())
-    throw std::runtime_error("the hand being split cannot be split");
-  Card card = std::move(cards.back());
+    throw std::runtime_error("The hand being split cannot be split");
+
+  Card removed = std::move(cards.back());
   cards.pop_back();
-  Hand hand =  Hand(getBet(),card);
-  hand.hasBeenSplit = true;
-  this->hasBeenSplit = true;
-  return hand;
+
+  return removed;
 }
