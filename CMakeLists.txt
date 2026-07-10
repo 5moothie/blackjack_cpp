@@ -12,6 +12,7 @@ add_library(blackjack_lib
   src/card/card.cpp
   src/card/deck.cpp
   src/blackjack/components/hand.cpp
+  src/blackjack/components/playerHand.cpp
   src/blackjack/components/shoe.cpp
   src/blackjack/components/dealer.cpp
   src/blackjack/components/player.cpp
