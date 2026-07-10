@@ -7,7 +7,9 @@
 #include "card/card.hpp"
 
 /*
-Hand is a one round class - after a round it should be destroyed and a new hand must be created for the next one
+Hand is a one round class - after a round it should be destroyed and a new hand must be created for the next one.
+
+Hand with no cards is not allowed.
 */
 
 class Hand {
@@ -21,7 +23,6 @@ private:
   HandScore calculateScore() const noexcept;
   
 public:
-  Hand() = default;
   Hand(Card card): cards{std::move(card)} {}
   Hand(Card card1, Card card2): cards{std::move(card1), std::move(card2)} {}
 
@@ -40,5 +41,4 @@ public:
   Card removeCardForSplit();
 
   void hit(Card card) noexcept;
-  void clear() noexcept {cards.clear();}
 };

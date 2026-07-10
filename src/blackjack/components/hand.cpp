@@ -39,7 +39,7 @@ void Hand::hit(Card card) noexcept {
 }
 
 bool Hand::canDouble() const noexcept {
-  return getSize() == 2;
+  return getSize() == 2 && !isBlackjack();
 }
 
 bool Hand::canSplit() const noexcept {

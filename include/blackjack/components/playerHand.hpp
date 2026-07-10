@@ -5,7 +5,9 @@
 
 
 /*
-PlayerHand is a one round class - after a round it should be destroyed and a new hand must be created for the next one
+PlayerHand is a one round class - after a round it should be destroyed and a new hand must be created for the next one.
+
+PlayerHand with no cards is not allowed.
 */
 
 class PlayerHand {
@@ -15,7 +17,6 @@ private:
   int splitCounter{0};
 
 public:
-  PlayerHand(int bet): bet(bet), hand() {}
   PlayerHand(int bet, Card card): bet(bet), hand(std::move(card)) {}
   PlayerHand(int bet, Card card1, Card card2): bet(bet), hand(std::move(card1), std::move(card2)) {}
 
@@ -35,5 +36,4 @@ public:
   void hit(Card card) noexcept { hand.hit(std::move(card)); };
   void double_(Card card, int balance);
   PlayerHand split(int balance);
-  void clear() noexcept {hand.clear();}
 };
