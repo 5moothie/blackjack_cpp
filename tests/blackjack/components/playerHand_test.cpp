@@ -66,10 +66,11 @@ TEST_CASE("(PlayerHand) getSize correctly returns amount of cards") {
   PlayerHand hand(20, Card(Rank::King, Suit::Clubs));
   REQUIRE(hand.getSize() == 1);
   
-  for(int i = 2; i < 10; i++) {
-    hand.hit(Card(Rank::Five, Suit::Spades));
-    REQUIRE(hand.getSize() == i);
-  }
+  hand.hit(Card(Rank::Five, Suit::Spades));
+  REQUIRE(hand.getSize() == 2);
+
+  hand.hit(Card(Rank::Five, Suit::Spades));
+  REQUIRE(hand.getSize() == 3);
 }
 
 
@@ -139,11 +140,19 @@ TEST_CASE("(PlayerHand) isBust returns false below or equal to 21") {
 }
 
 TEST_CASE("(PlayerHand) isBust returns false below or equal to 21 when soft") {
+  PlayerHand hand(20, Card(Rank::Ace, Suit::Spades), Card(Rank::Eight, Suit::Clubs));
 
+  REQUIRE(hand.getValue() == 19);
+  REQUIRE(hand.isBust() == false);
 }
 
 TEST_CASE("(PlayerHand) isBust returns true above 21 when soft") {
+  PlayerHand hand(20, Card(Rank::Ace, Suit::Spades), Card(Rank::King, Suit::Clubs));
+  hand.hit(Card(Rank::King, Suit::Diamonds));
+  hand.hit(Card(Rank::Two, Suit::Clubs));
 
+  REQUIRE(hand.getValue() == 23);
+  REQUIRE(hand.isBust() == true);
 }
 
 TEST_CASE("(PlayerHand) isBlackjack returns true on ace and 10 value card") {
@@ -237,7 +246,7 @@ TEST_CASE("(PlayerHand) canDouble returns false when insufficient balance") {
 }
 
 TEST_CASE("(PlayerHand) doubling doubles the bet when sufficient balance") {
-  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades));
+  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades), Card(Rank::Ten, Suit::Diamonds));
   hand.double_(Card(Rank::Ten, Suit::Clubs), 40);
 
   REQUIRE(hand.getBet() == 40);
@@ -371,6 +380,8 @@ TEST_CASE("(PlayerHand) isBlackjack returns false after splitting on both decks"
 TEST_CASE("(PlayerHand) doubling blocks all actions (hitting, doubling, splitting)") {
   PlayerHand hand(20, Card(Rank::Nine, Suit::Spades), Card(Rank::Ace, Suit::Clubs));
   hand.double_(Card(Rank::King, Suit::Clubs), 40);
+  REQUIRE(hand.didPlayEnd() == true);
+
 
   REQUIRE(hand.getBet() == 40);
   REQUIRE(hand.getSize() == 3);
@@ -380,3 +391,109 @@ TEST_CASE("(PlayerHand) doubling blocks all actions (hitting, doubling, splittin
   REQUIRE_THROWS(hand.double_(Card(Rank::King, Suit::Spades), 20));
   REQUIRE_THROWS(hand.split(20));
 }
+
+TEST_CASE("canHit returns true before standing") {
+  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades), Card(Rank::Seven, Suit::Clubs));
+
+  REQUIRE(hand.canHit() == true);
+}
+
+TEST_CASE("standing disables all actions (doubling, splitting and hitting)") {
+  PlayerHand hand(20, Card(Rank::King, Suit::Spades), Card(Rank::King, Suit::Clubs));
+  hand.stand();
+
+  REQUIRE(hand.canHit() == false);
+  REQUIRE(hand.canDouble(20) == false);
+  REQUIRE(hand.canSplit(20) == false);
+}
+
+TEST_CASE("getAvailableActions returns split when splittable") {
+  PlayerHand hand(20, Card(Rank::King, Suit::Spades), Card(Rank::King, Suit::Clubs));
+  auto actions = hand.getAvailableActions(20);
+
+  bool containsSplit = false;
+  for (const auto action : actions)
+    containsSplit = containsSplit || action == HandActions::SPLIT;
+
+  REQUIRE(containsSplit == true);
+}
+
+TEST_CASE("getAvailableActions doesn't return split when balance is insufficient") {
+  PlayerHand hand(20, Card(Rank::King, Suit::Spades), Card(Rank::King, Suit::Clubs));
+  auto actions = hand.getAvailableActions(19);
+
+  bool containsSplit = false;
+  for (const auto action : actions)
+    containsSplit = containsSplit || action == HandActions::SPLIT;
+
+  REQUIRE(containsSplit == false);
+}
+
+TEST_CASE("getAvailableActions returns double when can double") {
+  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades), Card(Rank::Seven, Suit::Clubs));
+  auto actions = hand.getAvailableActions(20);
+
+  bool containsDouble = false;
+  for (const auto action : actions)
+    containsDouble = containsDouble || action == HandActions::DOUBLE;
+
+  REQUIRE(containsDouble == true);
+}
+
+TEST_CASE("getAvailableActions doesn't return double when balance is insufficient") {
+  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades), Card(Rank::Five, Suit::Clubs));
+  auto actions = hand.getAvailableActions(19);
+
+  bool containsDouble = false;
+  for (const auto action : actions)
+    containsDouble = containsDouble || action == HandActions::DOUBLE;
+
+  REQUIRE(containsDouble == false);
+}
+
+TEST_CASE("getAvailableActions returns hit when can hit") {
+  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades), Card(Rank::Seven, Suit::Clubs));
+  auto actions = hand.getAvailableActions(0);
+
+  bool containsHit = false;
+  for (const auto action : actions)
+    containsHit = containsHit || action == HandActions::HIT;
+
+  REQUIRE(containsHit == true);
+}
+
+TEST_CASE("getAvailableActions doesn't return hit when bust") {
+  PlayerHand hand(20, Card(Rank::King, Suit::Spades), Card(Rank::Queen, Suit::Clubs));
+  hand.hit(Card(Rank::Two, Suit::Diamonds));
+  auto actions = hand.getAvailableActions(0);
+
+  bool containsHit = false;
+  for (const auto action : actions)
+    containsHit = containsHit || action == HandActions::HIT;
+
+  REQUIRE(containsHit == false);
+}
+
+TEST_CASE("getAvailableActions doesn't return hit when stood") {
+  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades), Card(Rank::Seven, Suit::Clubs));
+  hand.stand();
+  auto actions = hand.getAvailableActions(0);
+
+  bool containsHit = false;
+  for (const auto action : actions)
+    containsHit = containsHit || action == HandActions::HIT;
+
+  REQUIRE(containsHit == false);
+}
+
+TEST_CASE("getAvailableActions always returns stand") {
+  PlayerHand hand(20, Card(Rank::Nine, Suit::Spades));
+  auto actions = hand.getAvailableActions(0);
+
+  bool containsStand = false;
+  for (const auto action : actions)
+    containsStand = containsStand || action == HandActions::STAND;
+
+  REQUIRE(containsStand == true);
+}
+
