@@ -14,7 +14,7 @@ add_library(blackjack_lib
   src/blackjack/components/hand.cpp
   src/blackjack/components/playerHand.cpp
   src/blackjack/components/shoe.cpp
-  # src/blackjack/components/dealer.cpp
+  src/blackjack/components/dealer.cpp
   # src/blackjack/components/player.cpp
   # src/blackjack/game.cpp
   # src/blackjack/IO/consoleDisplay.cpp
@@ -44,6 +44,7 @@ add_executable(blackjack_tests
   tests/blackjack/components/shoe_test.cpp
   tests/blackjack/components/hand_test.cpp
   tests/blackjack/components/playerHand_test.cpp
+  tests/blackjack/components/dealer_test.cpp
 )
 
 target_link_libraries(blackjack_tests 
