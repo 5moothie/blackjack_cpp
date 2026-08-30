@@ -13,7 +13,7 @@ Shoe needs to be reshuffled manually with reshuffle funciton.
 */
 
 class Shoe {
-private:
+protected:
   std::vector<Card> cards{};
   size_t numberOfDecks;
   float cutCard;
