@@ -56,7 +56,7 @@ void Player::splitActiveHand(Shoe& shoe) {
   if(getActiveHand().isBust())
     throw std::runtime_error("The hand that is being doubled is bust.");
 
-  int bet = getActiveHand().getBet();
+  long long bet = getActiveHand().getBet();
   Hand hand = getActiveHand().split();
   hand.hit(shoe.getCard());
   hands.push_back(hand);
@@ -73,7 +73,7 @@ void Player::settleHands(const Hand& dealersHand) {
     if(hand.isBust())
       continue;
 
-    int bet = hand.getBet();
+    long long bet = hand.getBet();
 
     if(hand.isBlackjack()) {
       if(dealersHand.isBlackjack())
@@ -98,7 +98,7 @@ void Player::clearHands() noexcept {
   activeHand = 0;
 }
 
-void Player::playNewHand(int bet, Shoe& shoe) {
+void Player::playNewHand(long long bet, Shoe& shoe) {
   if(balance < bet)
     throw std::runtime_error("The balance is not sufficient for this bet.");
   balance-=bet;

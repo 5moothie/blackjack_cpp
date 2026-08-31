@@ -2,8 +2,8 @@
 #include <stdexcept>
 
 Hand::HandScore Hand::calculateScore() const noexcept {
-  int acesCount = 0;
-  int value = 0;
+  long long acesCount = 0;
+  long long value = 0;
   for(const auto& card : cards) {
     if(card.getRank() == Rank::Ace)
       acesCount++;
@@ -19,7 +19,7 @@ Hand::HandScore Hand::calculateScore() const noexcept {
   return {value, acesCount};
 }
 
-int Hand::getValue() const noexcept {
+long long Hand::getValue() const noexcept {
   return calculateScore().value;
 }
 

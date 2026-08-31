@@ -17,8 +17,8 @@ private:
   std::vector<Card> cards{};
 
   struct HandScore{
-    int value;
-    int acesCount;
+    long long value;
+    long long acesCount;
   };
   HandScore calculateScore() const noexcept;
   
@@ -30,7 +30,7 @@ public:
   [[nodiscard]] size_t getSize() const noexcept { return cards.size(); }
   [[nodiscard]] std::string toString() const noexcept;
 
-  [[nodiscard]] int getValue() const noexcept;
+  [[nodiscard]] long long getValue() const noexcept;
   [[nodiscard]] bool isBust() const noexcept {return getValue() > 21;}
   [[nodiscard]] bool isBlackjack() const noexcept {return getValue() == 21 && getSize() == 2; }
   [[nodiscard]] bool isSoft() const noexcept;
