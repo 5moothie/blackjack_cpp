@@ -45,10 +45,9 @@ void Player::doubleActiveHand(Shoe& shoe) {
   if(getActiveHand().isBust())
     throw std::runtime_error("The hand that is being doubled is bust.");
   
-  balance-=getActiveHand().getBet();
   getActiveHand().double_(shoe.getCard(), balance);
-
-
+  balance-=getActiveHand().getBet();
+  
   activeHand++;
 }
 
@@ -107,6 +106,6 @@ void Player::clearHands() noexcept {
 void Player::addHand(long long bet, Shoe& shoe) {
   if(balance < bet)
     throw std::runtime_error("The balance is not sufficient for this bet.");
-  balance-=bet;
   hands.push_back(PlayerHand(bet, shoe.getCard(), shoe.getCard())); 
+  balance-=bet;
 }

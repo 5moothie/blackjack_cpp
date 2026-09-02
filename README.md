@@ -12,7 +12,6 @@ Future goals:
 - the game itself
 
 TODOS:
-- rewrite player to use playerHand
 - remaining tests:
   - player
 - rewrite game and create tests for it
