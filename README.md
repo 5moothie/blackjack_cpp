@@ -12,5 +12,9 @@ Future goals:
 - the game itself
 
 TODOS:
-- remaining tests for cards and components
-- add settings and most popular settings
+- rewrite player to use playerHand
+- remaining tests:
+  - player
+- rewrite game and create tests for it
+- add Raylib display
+- add settings

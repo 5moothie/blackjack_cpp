@@ -45,6 +45,7 @@ add_executable(blackjack_tests
   tests/blackjack/components/hand_test.cpp
   tests/blackjack/components/playerHand_test.cpp
   tests/blackjack/components/dealer_test.cpp
+  tests/blackjack/components/player_test.cpp
 )
 
 target_link_libraries(blackjack_tests 

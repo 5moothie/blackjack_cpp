@@ -1,14 +1,20 @@
 #include "blackjack/components/player.hpp"
 #include <stdexcept>
 
-Hand& Player::getActiveHand() {
+PlayerHand& Player::getActiveHand() {
   if(activeHand >= hands.size())
     throw std::runtime_error("No more active hands");
 
   return hands[activeHand];  
 }
 
-const Hand& Player::getActiveHandConst() const {
+void Player::activateNextHand() noexcept {
+  if(activeHand > hands.size())
+    return;
+  activeHand++;
+}
+
+const PlayerHand& Player::getActiveHandConst() const {
   if(activeHand >= hands.size())
     throw std::runtime_error("No more active hands");
 
@@ -16,11 +22,11 @@ const Hand& Player::getActiveHandConst() const {
 }
 
 bool Player::canDoubleActiveHand() const {
-  return getActiveHandConst().canDouble() && getActiveHandConst().getBet() <= balance;
+  return getActiveHandConst().canDouble(balance);
 }
 
 bool Player::canSplitActiveHand() const {
-  return getActiveHandConst().canSplit() && getActiveHandConst().getBet() <= balance;
+  return getActiveHandConst().canSplit(balance);
 }
 
 void Player::hitActiveHand(Shoe& shoe) {
@@ -40,7 +46,7 @@ void Player::doubleActiveHand(Shoe& shoe) {
     throw std::runtime_error("The hand that is being doubled is bust.");
   
   balance-=getActiveHand().getBet();
-  getActiveHand().double_(shoe.getCard());
+  getActiveHand().double_(shoe.getCard(), balance);
 
 
   activeHand++;
@@ -57,7 +63,7 @@ void Player::splitActiveHand(Shoe& shoe) {
     throw std::runtime_error("The hand that is being doubled is bust.");
 
   long long bet = getActiveHand().getBet();
-  Hand hand = getActiveHand().split();
+  PlayerHand hand = getActiveHand().split(balance);
   hand.hit(shoe.getCard());
   hands.push_back(hand);
   balance-=bet;
@@ -69,7 +75,7 @@ void Player::splitActiveHand(Shoe& shoe) {
 void Player::settleHands(const Hand& dealersHand) {
   if(hasActiveHand())
     throw std::runtime_error("player is still playing");
-  for(const Hand& hand : hands) {
+  for(const PlayerHand& hand : hands) {
     if(hand.isBust())
       continue;
 
@@ -98,9 +104,9 @@ void Player::clearHands() noexcept {
   activeHand = 0;
 }
 
-void Player::playNewHand(long long bet, Shoe& shoe) {
+void Player::addHand(long long bet, Shoe& shoe) {
   if(balance < bet)
     throw std::runtime_error("The balance is not sufficient for this bet.");
   balance-=bet;
-  hands.push_back(Hand(bet, shoe.getCard(), shoe.getCard())); 
+  hands.push_back(PlayerHand(bet, shoe.getCard(), shoe.getCard())); 
 }
