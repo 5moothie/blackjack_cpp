@@ -9,7 +9,7 @@ PlayerHand& Player::getActiveHand() {
 }
 
 void Player::activateNextHand() noexcept {
-  if(activeHand > hands.size())
+  if(activeHand >= hands.size())
     return;
   activeHand++;
 }
@@ -35,7 +35,7 @@ void Player::hitActiveHand(Shoe& shoe) {
 
   getActiveHand().hit(shoe.getCard());
 
-  if(getActiveHand().isBust())
+  if(getActiveHand().isBust() || getActiveHand().getValue() == 21)
     activeHand++;
 }
 
@@ -45,13 +45,15 @@ void Player::doubleActiveHand(Shoe& shoe) {
   if(getActiveHand().isBust())
     throw std::runtime_error("The hand that is being doubled is bust.");
   
+  long long originalBet = getActiveHand().getBet();
   getActiveHand().double_(shoe.getCard(), balance);
-  balance-=getActiveHand().getBet();
+  balance-=originalBet;
   
   activeHand++;
 }
 
 void Player::standActiveHand() {
+  getActiveHand().stand();
   activeHand++;
 }
 
@@ -98,12 +100,16 @@ void Player::settleHands(const Hand& dealersHand) {
   }
 }
 
-void Player::clearHands() noexcept {
+void Player::clearHands() {
+  if(hasActiveHand())
+    throw std::runtime_error("player is still playing");
   hands.clear();
   activeHand = 0;
 }
 
 void Player::addHand(long long bet, Shoe& shoe) {
+  if(bet <= 0 || bet % 2 != 0)
+    throw std::invalid_argument("The bet must be a positive even number.");
   if(balance < bet)
     throw std::runtime_error("The balance is not sufficient for this bet.");
   hands.push_back(PlayerHand(bet, shoe.getCard(), shoe.getCard())); 

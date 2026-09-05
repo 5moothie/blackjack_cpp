@@ -12,8 +12,7 @@ Future goals:
 - the game itself
 
 TODOS:
-- remaining tests:
-  - player
+- Fix player tests/class
 - rewrite game and create tests for it
 - add Raylib display
 - add settings

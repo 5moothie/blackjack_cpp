@@ -3,6 +3,7 @@
 #include "blackjack/components/playerHand.hpp"
 #include "blackjack/components/shoe.hpp"
 
+#include <stdexcept>
 #include <vector>
 
 // #define int long long  // honorable mention ~ Ula
@@ -19,7 +20,10 @@ private:
   
   PlayerHand& getActiveHand();
 public:
-  Player(long long balance): balance(balance), activeHand(0), hands{} {}
+  Player(long long balance): balance(balance), activeHand(0), hands{} {
+    if(balance < 0)
+      throw std::invalid_argument("The balance cannot be negative.");
+  }
 
   [[nodiscard]] const PlayerHand& getActiveHandConst() const;
   // activates next hand, when no more hands - does nothing
@@ -39,6 +43,6 @@ public:
   void splitActiveHand(Shoe& shoe);
 
   void settleHands(const Hand& dealersHand);
-  void clearHands() noexcept;
+  void clearHands();
   void addHand(long long bet, Shoe& shoe);
 };

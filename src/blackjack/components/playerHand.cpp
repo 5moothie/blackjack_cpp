@@ -5,7 +5,7 @@
 #include <vector>
 
 bool PlayerHand::canDouble(int balance) const noexcept {
-  return hand.canDouble() && balance >= bet && !playEnded;
+  return hand.canDouble() && balance >= bet && !playEnded && splitCounter == 0;
 }
 
 bool PlayerHand::canSplit(int balance) const noexcept {
