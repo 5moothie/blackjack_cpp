@@ -2,7 +2,7 @@
 
 The goal of this project is to analyze the game of blackjack and the chance of beating it unnoticed.
 
-By beating it I mean achieving above 50% winrate with <= 2 counts in your head. Ideally above 50.5% winrate. The winration will be calculated by simulating the game (probably).
+By beating it I mean achieving above 1 EV (estimated value) with <= 2 counts in your head. Ideally the EV should be achivable with randomized mistakes and 98% accuracy to strategy. The EV will be calculated by simulating the game (probably).
 
 Future goals:
 - find basic strategy myself (maybe some monte carlo or simulated annealing?)
@@ -12,7 +12,6 @@ Future goals:
 - the game itself
 
 TODOS:
-- Fix player tests/class
 - rewrite game and create tests for it
 - add Raylib display
 - add settings
