@@ -25,7 +25,7 @@ void Game::run() {
 void Game::play() {
   bool inGame = true;
   while(inGame) {
-    int betAmount = bet();
+    long long betAmount = bet();
 
     playHand(betAmount);
 
@@ -39,9 +39,9 @@ void Game::play() {
   }
 }
 
-int Game::bet() {
+long long Game::bet() {
   gameDisplay->showBettingScreen(player);
-  int betAmount = inputTaker->getBet(player.getBalance());
+  long long betAmount = inputTaker->getBet(player.getBalance());
     
   return betAmount;
 }
@@ -54,7 +54,7 @@ BetweenHandActions Game::betweenHandsMenu() {
   return action;
 }
 
-void Game::playHand(int bet) {
+void Game::playHand(long long bet) {
   player.playNewHand(bet, shoe);
   dealer.newHand(shoe);
 

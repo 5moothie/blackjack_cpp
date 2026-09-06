@@ -14,6 +14,7 @@ public:
   [[nodiscard]] Rank getRank() const noexcept {return rank;}
   [[nodiscard]] Suit getSuit() const noexcept {return suit;}
 
+  // gets value (11 for ace) 
   [[nodiscard]] int getValue() const noexcept;
 
   [[nodiscard]] std::string rankToString() const noexcept;

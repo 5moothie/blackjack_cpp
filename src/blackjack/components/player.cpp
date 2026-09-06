@@ -1,14 +1,20 @@
 #include "blackjack/components/player.hpp"
 #include <stdexcept>
 
-Hand& Player::getActiveHand() {
+PlayerHand& Player::getActiveHand() {
   if(activeHand >= hands.size())
     throw std::runtime_error("No more active hands");
 
   return hands[activeHand];  
 }
 
-const Hand& Player::getActiveHandConst() const {
+void Player::activateNextHand() noexcept {
+  if(activeHand >= hands.size())
+    return;
+  activeHand++;
+}
+
+const PlayerHand& Player::getActiveHandConst() const {
   if(activeHand >= hands.size())
     throw std::runtime_error("No more active hands");
 
@@ -16,11 +22,11 @@ const Hand& Player::getActiveHandConst() const {
 }
 
 bool Player::canDoubleActiveHand() const {
-  return getActiveHandConst().canDouble() && getActiveHandConst().getBet() <= balance;
+  return getActiveHandConst().canDouble(balance);
 }
 
 bool Player::canSplitActiveHand() const {
-  return getActiveHandConst().canSplit() && getActiveHandConst().getBet() <= balance;
+  return getActiveHandConst().canSplit(balance);
 }
 
 void Player::hitActiveHand(Shoe& shoe) {
@@ -29,7 +35,7 @@ void Player::hitActiveHand(Shoe& shoe) {
 
   getActiveHand().hit(shoe.getCard());
 
-  if(getActiveHand().isBust())
+  if(getActiveHand().isBust() || getActiveHand().getValue() == 21)
     activeHand++;
 }
 
@@ -39,14 +45,15 @@ void Player::doubleActiveHand(Shoe& shoe) {
   if(getActiveHand().isBust())
     throw std::runtime_error("The hand that is being doubled is bust.");
   
-  balance-=getActiveHand().getBet();
-  getActiveHand().double_(shoe.getCard());
-
-
+  long long originalBet = getActiveHand().getBet();
+  getActiveHand().double_(shoe.getCard(), balance);
+  balance-=originalBet;
+  
   activeHand++;
 }
 
 void Player::standActiveHand() {
+  getActiveHand().stand();
   activeHand++;
 }
 
@@ -56,8 +63,8 @@ void Player::splitActiveHand(Shoe& shoe) {
   if(getActiveHand().isBust())
     throw std::runtime_error("The hand that is being doubled is bust.");
 
-  int bet = getActiveHand().getBet();
-  Hand hand = getActiveHand().split();
+  long long bet = getActiveHand().getBet();
+  PlayerHand hand = getActiveHand().split(balance);
   hand.hit(shoe.getCard());
   hands.push_back(hand);
   balance-=bet;
@@ -69,11 +76,11 @@ void Player::splitActiveHand(Shoe& shoe) {
 void Player::settleHands(const Hand& dealersHand) {
   if(hasActiveHand())
     throw std::runtime_error("player is still playing");
-  for(const Hand& hand : hands) {
+  for(const PlayerHand& hand : hands) {
     if(hand.isBust())
       continue;
 
-    int bet = hand.getBet();
+    long long bet = hand.getBet();
 
     if(hand.isBlackjack()) {
       if(dealersHand.isBlackjack())
@@ -93,14 +100,18 @@ void Player::settleHands(const Hand& dealersHand) {
   }
 }
 
-void Player::clearHands() noexcept {
+void Player::clearHands() {
+  if(hasActiveHand())
+    throw std::runtime_error("player is still playing");
   hands.clear();
   activeHand = 0;
 }
 
-void Player::playNewHand(int bet, Shoe& shoe) {
+void Player::addHand(long long bet, Shoe& shoe) {
+  if(bet <= 0 || bet % 2 != 0)
+    throw std::invalid_argument("The bet must be a positive even number.");
   if(balance < bet)
     throw std::runtime_error("The balance is not sufficient for this bet.");
+  hands.push_back(PlayerHand(bet, shoe.getCard(), shoe.getCard())); 
   balance-=bet;
-  hands.push_back(Hand(bet, shoe.getCard(), shoe.getCard())); 
 }

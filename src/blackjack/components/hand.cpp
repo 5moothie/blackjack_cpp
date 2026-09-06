@@ -2,8 +2,8 @@
 #include <stdexcept>
 
 Hand::HandScore Hand::calculateScore() const noexcept {
-  int acesCount = 0;
-  int value = 0;
+  long long acesCount = 0;
+  long long value = 0;
   for(const auto& card : cards) {
     if(card.getRank() == Rank::Ace)
       acesCount++;
@@ -19,7 +19,7 @@ Hand::HandScore Hand::calculateScore() const noexcept {
   return {value, acesCount};
 }
 
-int Hand::getValue() const noexcept {
+long long Hand::getValue() const noexcept {
   return calculateScore().value;
 }
 
@@ -39,27 +39,19 @@ void Hand::hit(Card card) noexcept {
 }
 
 bool Hand::canDouble() const noexcept {
-  return getSize() == 2;
-}
-
-void Hand::double_(Card card) {
-  if(!canDouble())
-    throw std::runtime_error("the hand being doubled cannot be doubled");
-  cards.push_back(std::move(card));
-  bet*=2;
+  return getSize() == 2 && !isBlackjack();
 }
 
 bool Hand::canSplit() const noexcept {
   return getSize() == 2 && cards[0].getRank() == cards[1].getRank();
 }
 
-Hand Hand::split() {
+Card Hand::removeCardForSplit() {
   if(!canSplit())
-    throw std::runtime_error("the hand being split cannot be split");
-  Card card = std::move(cards.back());
+    throw std::runtime_error("The hand being split cannot be split");
+
+  Card removed = std::move(cards.back());
   cards.pop_back();
-  Hand hand =  Hand(getBet(),card);
-  hand.hasBeenSplit = true;
-  this->hasBeenSplit = true;
-  return hand;
+
+  return removed;
 }
