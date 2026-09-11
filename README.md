@@ -12,6 +12,10 @@ Future goals:
 - the game itself
 
 TODOS:
-- rewrite game and create tests for it
-- add Raylib display
+- write:
+  - blackjackRayLibIO
+  - blackjackConsoleIO
+  - blackjackGame
+  - gameManager
+- change folder structure
 - add settings

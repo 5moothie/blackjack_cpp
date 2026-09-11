@@ -16,7 +16,8 @@ private:
 public:
   Dealer(bool hitOnSoft17): hitOnSoft17(hitOnSoft17) {}
 
-  [[nodiscard]] bool hasHand() const noexcept {return hand.has_value();}
+  [[nodiscard]] bool hasHand() const noexcept { return hand.has_value(); }
+  // throws if dealers hand hasn't been played out yet
   [[nodiscard]] const Hand& getHand() const;
   [[nodiscard]] const Card& getFirstCard() const;
   [[nodiscard]] const bool peekForBlackjack() const;
