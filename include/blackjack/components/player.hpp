@@ -26,6 +26,7 @@ public:
   }
 
   [[nodiscard]] const PlayerHand& getActiveHandConst() const;
+  [[nodiscard]] const size_t getActiveHandNumber() const;
   // activates next hand, when no more hands - does nothing
   void activateNextHand() noexcept;
   [[nodiscard]] bool hasActiveHand() const noexcept { return handsLeftToPlay() > 0; };

@@ -2,12 +2,12 @@
 
 
 #include "blackjack/blackjackGame.hpp"
-#include "gameScreens.hpp"
+#include "screens.hpp"
 
 
 class GameManager {
 private:
-  GameScreen gameScreen;
+  ProgramScreen programScreen;
   BlackjackGame blackjackGame;
 
 

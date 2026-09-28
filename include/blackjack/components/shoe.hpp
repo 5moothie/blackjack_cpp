@@ -26,6 +26,7 @@ public:
   /* 
   Fills the shoe with numberOfDecks decks and sets a cutcard.
   Shuffles the cards. 
+  
   CutCard is counted in remaining decks. So f.eg. 1.5 cutcard means that if there are <= 1.5*52 cards left in the shoe, then the shoe needs reshuffling.
   */
   Shoe(size_t numberOfDecks, float cutCard);

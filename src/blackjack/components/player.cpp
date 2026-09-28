@@ -76,6 +76,7 @@ void Player::splitActiveHand(Shoe& shoe) {
 void Player::settleHands(const Hand& dealersHand) {
   if(hasActiveHand())
     throw std::runtime_error("player is still playing");
+
   for(const PlayerHand& hand : hands) {
     if(hand.isBust())
       continue;
@@ -110,8 +111,17 @@ void Player::clearHands() {
 void Player::addHand(long long bet, Shoe& shoe) {
   if(bet <= 0 || bet % 2 != 0)
     throw std::invalid_argument("The bet must be a positive even number.");
+
   if(balance < bet)
     throw std::runtime_error("The balance is not sufficient for this bet.");
+  
   hands.push_back(PlayerHand(bet, shoe.getCard(), shoe.getCard())); 
   balance-=bet;
+}
+
+const size_t Player::getActiveHandNumber() const {
+  if(hands.empty())
+    throw std::runtime_error("Asked for active hand with no hands in play.");
+
+  return activeHand;
 }
