@@ -1,4 +1,4 @@
-#include "gameManager.hpp"
+#include "programManager.hpp"
 
 /*
 TODOS:
@@ -7,7 +7,7 @@ TODOS:
 */
 
 int main() {
-  GameManager gameManager{};  
+  ProgramManager programManager{};  
 
-  gameManager.start();
+  programManager.start();
 }

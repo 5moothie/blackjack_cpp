@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+find_package(raylib REQUIRED)
+
 # ================= blackjack lib ======================
 
 add_library(blackjack_lib
@@ -16,9 +18,8 @@ add_library(blackjack_lib
   src/blackjack/components/shoe.cpp
   src/blackjack/components/dealer.cpp
   src/blackjack/components/player.cpp
-  # src/blackjack/game.cpp
-  # src/blackjack/IO/consoleDisplay.cpp
-  # src/blackjack/IO/consoleInputTaker.cpp
+  src/blackjack/blackjackGame.cpp
+  # src/blackjack/IO/blackjackRayLibIO.cpp
 )
 
 target_include_directories(blackjack_lib PUBLIC
@@ -28,9 +29,12 @@ target_include_directories(blackjack_lib PUBLIC
 # ================ main ==============
 add_executable(blackjack
   src/main.cpp
+  src/programManager.cpp
 )
 
 target_link_libraries(blackjack PRIVATE blackjack_lib)
+
+target_link_libraries(blackjack PUBLIC raylib)
 
 # ============== tests ================ 
 

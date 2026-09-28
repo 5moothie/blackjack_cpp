@@ -1,5 +1,5 @@
 #include "blackjack/components/playerHand.hpp"
-#include "blackjack/IO/actions.hpp"
+#include "blackjack/actions.hpp"
 
 #include <stdexcept>
 #include <vector>
