@@ -14,8 +14,6 @@ Future goals:
 TODOS:
 - write:
   - blackjackRayLibIO
-  - blackjackConsoleIO
-  - blackjackGame
-  - gameManager
+  - mainMenuIO
 - change folder structure
 - add settings

@@ -19,7 +19,7 @@ add_library(blackjack_lib
   src/blackjack/components/dealer.cpp
   src/blackjack/components/player.cpp
   src/blackjack/blackjackGame.cpp
-  # src/blackjack/IO/blackjackRayLibIO.cpp
+  # src/blackjack/UI/blackjackRayLibIO.cpp
 )
 
 target_include_directories(blackjack_lib PUBLIC
@@ -29,7 +29,7 @@ target_include_directories(blackjack_lib PUBLIC
 # ================ main ==============
 add_executable(blackjack
   src/main.cpp
-  src/programManager.cpp
+  src/UI/programManager.cpp
 )
 
 target_link_libraries(blackjack PRIVATE blackjack_lib)
