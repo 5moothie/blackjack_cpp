@@ -19,7 +19,7 @@ add_library(blackjack_lib
   src/blackjack/components/dealer.cpp
   src/blackjack/components/player.cpp
   src/blackjack/blackjackGame.cpp
-  # src/blackjack/UI/blackjackRayLibIO.cpp
+  src/blackjack/UI/blackjackRayLibIO.cpp
 )
 
 target_include_directories(blackjack_lib PUBLIC
@@ -27,14 +27,21 @@ target_include_directories(blackjack_lib PUBLIC
 )
 
 # ================ main ==============
+
 add_executable(blackjack
   src/main.cpp
   src/UI/programManager.cpp
+  src/UI/mainMenuIO.cpp
+  src/UI/util/button.cpp
 )
 
 target_link_libraries(blackjack PRIVATE blackjack_lib)
 
 target_link_libraries(blackjack PUBLIC raylib)
+
+# =============== copy the assets ================
+
+file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # ============== tests ================ 
 

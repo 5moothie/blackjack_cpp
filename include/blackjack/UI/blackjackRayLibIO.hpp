@@ -3,6 +3,7 @@
 #include "blackjack/blackjackGame.hpp"
 #include "UI/display.hpp"
 #include "UI/screenManager.hpp"
+#include <raylib.h>
 
 class BlackjackRayLibIO : public Display {
 private:
@@ -12,6 +13,6 @@ private:
 public:
   BlackjackRayLibIO(ScreenManager& screenManager): screenManager(screenManager) {}
 
-  void update() override;
+  void update() override {}
   void draw() const override;
 };

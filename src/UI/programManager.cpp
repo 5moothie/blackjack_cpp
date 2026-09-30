@@ -5,17 +5,30 @@
 #include <memory>
 
 void ProgramManager::start() {
+  constexpr int width = 1920;
+  constexpr int height = 1080;
 
-  InitWindow(1200, 800, "BlackJacker");
+  InitWindow(width, height, "BlackJacker");
+  SetTargetFPS(60);
+  SetExitKey(KEY_NULL);
 
+  blackjackIO = std::make_unique<BlackjackRayLibIO>(*screenManager);
+  mainMenuIO = std::make_unique<MainMenuIO>(*screenManager);
 
-  while(!WindowShouldClose()) {
+  while(!screenManager->shouldWindowClose()) {
     update();
     draw();
   }
+
+  mainMenuIO.reset();
+  blackjackIO.reset();
+  CloseWindow();
 }
 
 void ProgramManager::update() {
+  if(WindowShouldClose()) // so the program closes on X
+    screenManager->requestClose();
+
   switch(screenManager->getScreen()) {
     case ProgramScreen::MAIN_MENU:
       mainMenuIO->update();
@@ -41,9 +54,7 @@ void ProgramManager::draw() const {
 
 
 ProgramManager::ProgramManager(): 
-  screenManager(std::make_unique<ScreenManager>()), 
-  blackjackIO(std::make_unique<BlackjackRayLibIO>(*screenManager)),
-  mainMenuIO(std::make_unique<MainMenuIO>(*screenManager)) {
+  screenManager(std::make_unique<ScreenManager>()) {
   
 }
 
