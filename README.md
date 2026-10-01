@@ -12,7 +12,7 @@ Future goals:
 - the game itself
 
 TODOS:
-- create a background class for UI (with destructor of texture) and revert the MainMenuIO destructor to default
+- Make use of the background class
 - write:
   - blackjackRayLibIO
   - mainMenuIO

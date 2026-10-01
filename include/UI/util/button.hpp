@@ -5,8 +5,7 @@ class Button {
 private:
   Texture2D texture;
   Vector2 position;
-  const int startingWidth;
-  const int startingHeight;
+  Vector2 renderSize;
 
 public:
   Button(const char* imagePath, Vector2 imagePosition);
@@ -16,8 +15,8 @@ public:
   // no copying or moving
   Button(const Button&) = delete;
   Button& operator=(const Button&) = delete;
-  Button(Button&&) noexcept = default;
-  // Button& operator=(Button&&) noexcept = default;
+  Button(Button&&) noexcept = delete;
+  Button& operator=(Button&&) noexcept = delete;
 
   void draw() const;
   [[nodiscard]] bool isPressed(Vector2 mousePos, bool mousePressed) const;
@@ -33,9 +32,12 @@ public:
   [[nodiscard]] int getWidth() const;
   [[nodiscard]] int getHeight() const;
 
-  void scaleBySettingWidth(const int width);
-  void scaleBySettingHeight(const int height);
+  void scaleToWidth(const int width);
+  void scaleToHeight(const int height);
   void scale(const float k);
+
+  void scaleToContainTexture(const int width, const int height);
+  void scaleToOverflowTexture(const int width, const int height);
   
   void restoreOriginalDimensions();
   void setPositionByMiddle(Vector2 position);

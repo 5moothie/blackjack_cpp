@@ -1,13 +1,12 @@
 #include "UI/util/button.hpp"
 #include <raylib.h>
+#include "UI/util/renderMath.hpp"
 
 Button::Button(const char* imagePath, Vector2 imagePosition): 
       texture(LoadTexture(imagePath)), 
       position(imagePosition),
-      startingWidth(texture.width),
-      startingHeight(texture.height)
-{
-
+      renderSize({static_cast<float>(texture.width), static_cast<float>(texture.height)}) {
+        
 }
 
 Button::Button(const char* imagePath): Button(imagePath, {0.0f, 0.0f}) {}
@@ -17,11 +16,14 @@ Button::~Button() {
 }
 
 void Button::draw() const {
-  DrawTextureV(texture, position, WHITE);
+  Rectangle sourceRec = {0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+  Rectangle destRec = {position.x, position.y, renderSize.x, renderSize.y};
+
+  DrawTexturePro(texture, sourceRec, destRec, {0.0f, 0.0f}, 0.0f, WHITE);
 }
 
 bool Button::isPressed(Vector2 mousePos, bool mousePressed) const {
-  Rectangle hitBox = {position.x, position.y, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+  Rectangle hitBox = {position.x, position.y, renderSize.x, renderSize.y};
 
   return CheckCollisionPointRec(mousePos, hitBox) && mousePressed;
 }
@@ -43,42 +45,39 @@ float Button::getY() const noexcept {
 }
 
 void Button::setWidth(const int width) {
-  texture.width = width;
+  RenderMath::setWidth(renderSize, width);
 }
 
 void Button::setHeight(const int height) {
-  texture.height = height;
+  RenderMath::setHeight(renderSize, height);
 }
 
 int Button::getWidth() const {
-  return texture.width;
+  return renderSize.x;
 }
 
 int Button::getHeight() const {
-  return texture.height;
+  return renderSize.y;
 }
 
-void Button::scaleBySettingWidth(const int width) {
-  texture.height = width*texture.height/texture.width;
-  texture.width = width;
+void Button::scaleToWidth(const int width) {
+  RenderMath::scaleToWidth(renderSize, width);
 }
 
-void Button::scaleBySettingHeight(const int height) {
-  texture.width = height*texture.width/texture.height;
-  texture.height = height;
+void Button::scaleToHeight(const int height) {
+  RenderMath::scaleToHeight(renderSize, height);
 }
 
 void Button::scale(const float k) {
-  texture.width *= k;
-  texture.height *= k;
+  RenderMath::scale(renderSize, k);
 }
 
 void Button::restoreOriginalDimensions() {
-  texture.height = startingHeight;
-  texture.width = startingWidth;
+  renderSize.x = texture.width;
+  renderSize.y = texture.height;
 }
 
 void Button::setPositionByMiddle(Vector2 position) {
-  this->position.x = position.x - static_cast<float>(texture.width) / 2.0f;
-  this->position.y = position.y - static_cast<float>(texture.height) / 2.0f;
+  this->position.x = position.x - renderSize.x / 2.0f;
+  this->position.y = position.y - renderSize.y / 2.0f;
 }

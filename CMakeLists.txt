@@ -33,6 +33,8 @@ add_executable(blackjack
   src/UI/programManager.cpp
   src/UI/mainMenuIO.cpp
   src/UI/util/button.cpp
+  src/UI/util/background.cpp
+  src/UI/util/renderMath.cpp
 )
 
 target_link_libraries(blackjack PRIVATE blackjack_lib)
