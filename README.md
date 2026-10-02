@@ -12,7 +12,6 @@ Future goals:
 - the game itself
 
 TODOS:
-- Make use of the background class
 - write:
   - blackjackRayLibIO
   - mainMenuIO
