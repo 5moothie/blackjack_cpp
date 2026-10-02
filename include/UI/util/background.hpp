@@ -6,7 +6,7 @@ class Background {
 private:
   Texture2D texture;
   Vector2 position = {0.0f, 0.0f};
-  Vector2 renderSize = {1.0f, 1.0f};
+  Vector2 renderSize;
 
 public:
   Background(const char* imagePath);
@@ -29,4 +29,6 @@ public:
   void scaleToContainTexture(const int width, const int height);
   void scaleToOverflowTexture(const int width, const int height);
   void scale(const float k);
+
+  void positionInTheMiddle(const int windowWidth, const int windowHeight);
 };

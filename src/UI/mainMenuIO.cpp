@@ -4,16 +4,13 @@
 
 MainMenuIO::MainMenuIO(ScreenManager& screenManager): 
     screenManager(screenManager), 
-    background(LoadTexture("assets/images/main_menu/main_menu_bg.jpg")),
+    background("assets/images/main_menu/main_menu_bg.jpg"),
     playButton("assets/images/main_menu/play_btn.jpg"),
     exitButton("assets/images/main_menu/exit_btn.jpg")
 {
   update();
 }
 
-MainMenuIO::~MainMenuIO() {
-  UnloadTexture(background);
-}
 
 void MainMenuIO::update() {
   // update size and positions
@@ -23,8 +20,8 @@ void MainMenuIO::update() {
   const float halfWidth = (float)width/2;
   const int spacer = 20;
 
-  background.height = height;
-  background.width = width;
+  background.scaleToContainTexture(width, height);
+  background.positionInTheMiddle(width, height);
 
   playButton.setPositionByMiddle({halfWidth, halfHeight});
   exitButton.setPositionByMiddle({halfWidth, halfHeight + playButton.getHeight() + spacer});
@@ -43,7 +40,9 @@ void MainMenuIO::update() {
 void MainMenuIO::draw() const {
   BeginDrawing();
 
-  DrawTexture(background, 0, 0, WHITE);
+  ClearBackground(BLACK);
+  
+  background.draw();
   playButton.draw();
   exitButton.draw();
 

@@ -21,4 +21,7 @@ namespace RenderMath {
   void scaleToOverflowTexture(Vector2& renderSize, const int desiredWidth, const int desiredHeight);
 
   void scale(Vector2& renderSize, const float k);
+
+
+  void setPositionByMiddle(Vector2& positionToChange, const Vector2 renderSize, const Vector2 desiredPosition);
 }

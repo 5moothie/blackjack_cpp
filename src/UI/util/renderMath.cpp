@@ -46,4 +46,9 @@ namespace RenderMath {
     renderSize.y *= k;
   }
 
+
+  void setPositionByMiddle(Vector2& positionToChange, const Vector2 renderSize, const Vector2 desiredPosition) {
+    positionToChange.x = desiredPosition.x - renderSize.x / 2.0f;
+    positionToChange.y = desiredPosition.y - renderSize.y / 2.0f;
+  }
 }

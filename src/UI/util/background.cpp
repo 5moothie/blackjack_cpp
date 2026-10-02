@@ -2,7 +2,9 @@
 #include <raylib.h>
 #include "UI/util/renderMath.hpp"
 
-Background::Background(const char* imagePath): texture(LoadTexture(imagePath)) {
+Background::Background(const char* imagePath): 
+      texture(LoadTexture(imagePath)),
+      renderSize({static_cast<float>(texture.width), static_cast<float>(texture.height)}) {
 
 }
 
@@ -44,4 +46,8 @@ void Background::scaleToOverflowTexture(const int width, const int height) {
 
 void Background::scale(const float k) {
   RenderMath::scale(renderSize, k);
+}
+
+void Background::positionInTheMiddle(const int windowWidth, const int windowHeight) {
+  RenderMath::setPositionByMiddle(position, renderSize, {(float)windowWidth/2, (float)windowHeight/2});
 }

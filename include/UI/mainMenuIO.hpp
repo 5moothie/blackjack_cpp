@@ -4,17 +4,18 @@
 #include "display.hpp"
 #include <raylib.h>
 #include "UI/util/button.hpp"
+#include "UI/util/background.hpp"
 
 class MainMenuIO : public Display {
 private:
   ScreenManager& screenManager;
-  Texture2D background;
+  Background background;
   Button playButton;
   Button exitButton;
 
 public:
   MainMenuIO(ScreenManager& screenManager);
-  ~MainMenuIO() override;
+  ~MainMenuIO() override = default;
 
   void update() override;
   void draw() const override;

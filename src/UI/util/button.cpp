@@ -78,6 +78,5 @@ void Button::restoreOriginalDimensions() {
 }
 
 void Button::setPositionByMiddle(Vector2 position) {
-  this->position.x = position.x - renderSize.x / 2.0f;
-  this->position.y = position.y - renderSize.y / 2.0f;
+  RenderMath::setPositionByMiddle(this->position, renderSize, position);
 }
