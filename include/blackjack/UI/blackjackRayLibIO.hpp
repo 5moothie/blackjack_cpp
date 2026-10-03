@@ -11,7 +11,7 @@ private:
   ScreenManager& screenManager;
 
 public:
-  BlackjackRayLibIO(ScreenManager& screenManager): screenManager(screenManager) {}
+  BlackjackRayLibIO(ScreenManager& screenManager);
 
   void update() override {}
   void draw() const override;

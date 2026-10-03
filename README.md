@@ -14,7 +14,7 @@ Future goals:
 TODOS:
 - write:
   - blackjackRayLibIO
-  - mainMenuIO
+- add shortcuts for clicking buttons
 - add tests for BlackjackGame
 - change folder structure
 - add settings
